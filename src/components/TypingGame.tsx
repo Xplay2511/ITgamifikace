@@ -10,7 +10,6 @@ const TypingGame: React.FC<TypingGameProps> = ({ onComplete, onClose }) => {
   const [userInput, setUserInput] = useState('');
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
-  const [accuracy, setAccuracy] = useState(100);
   const [totalTyped, setTotalTyped] = useState(0);
   const [correctTyped, setCorrectTyped] = useState(0);
   const [gameStarted, setGameStarted] = useState(false);

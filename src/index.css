@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Press Start 2P', cursive;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@layer components {
+  .arcade-card {
+    @apply bg-white rounded-lg shadow-lg border-2 border-arcade-neon-green;
+    transition: all 0.3s ease;
+  }
+  
+  .arcade-card:hover {
+    @apply shadow-xl border-arcade-neon-blue;
+    transform: translateY(-2px);
+  }
+  
+  .arcade-button {
+    @apply bg-arcade-purple text-white px-4 py-2 rounded font-arcade text-sm;
+    @apply border-2 border-arcade-neon-pink shadow-lg;
+    transition: all 0.2s ease;
+  }
+  
+  .arcade-button:hover {
+    @apply bg-arcade-cyan border-arcade-neon-blue;
+    transform: scale(1.05);
+  }
+  
+  .arcade-button:active {
+    transform: scale(0.95);
+  }
+  
+  .badge-locked {
+    @apply opacity-50 grayscale;
+  }
+  
+  .badge-unlocked {
+    @apply animate-bounce-gentle;
+  }
+  
+  .progress-bar {
+    @apply bg-arcade-gray rounded-full h-4 overflow-hidden;
+  }
+  
+  .progress-fill {
+    @apply bg-gradient-to-r from-arcade-yellow to-arcade-green h-full;
+    transition: width 0.5s ease;
+  }
+  
+  .neon-glow {
+    box-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00, 0 0 30px #00FF00;
+  }
+  
+  .snake-grid {
+    @apply bg-arcade-dark border-2 border-arcade-neon-green;
+  }
+  
+  .snake-cell {
+    @apply w-4 h-4;
+  }
+  
+  .snake-food {
+    @apply bg-arcade-neon-pink;
+  }
+  
+  .snake-body {
+    @apply bg-arcade-neon-green;
+  }
+  
+  .snake-head {
+    @apply bg-arcade-yellow;
+  }
+} 

@@ -1,102 +1,287 @@
-# 🎮 Gamifikace Informatika - Cloudová verze
+# 🎮 IT Gamifikace - Gamifikovaná výuka informatiky
 
-Moderní, vizuálně atraktivní a funkční webová aplikace pro gamifikovanou výuku informatiky pro 6. třídu gymnázia. Studenti sbírají odznaky a XP body za splněné úkoly v retro arcade stylu s pixelovými fonty, jasnými barvami a jednoduchými animacemi.
+**Moderní webová aplikace pro gamifikovanou výuku informatiky na základních školách**
 
-## ✨ Nové funkce - Cloudová synchronizace
+[![React](https://img.shields.io/badge/React-18.2.0-blue.svg)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.3.0-38B2AC.svg)](https://tailwindcss.com/)
+[![Firebase](https://img.shields.io/badge/Firebase-10.0.0-orange.svg)](https://firebase.google.com/)
+[![Vite](https://img.shields.io/badge/Vite-4.4.0-purple.svg)](https://vitejs.dev/)
 
-### 🔥 Firebase integrace
-- **Cloudová synchronizace** - pokrok studentů se ukládá do Firebase Firestore
-- **Přihlášení odkudkoliv** - studenti se mohou přihlásit z jakéhokoliv zařízení
-- **Bezpečná autentizace** - e-mail a heslo pro každého studenta
-- **Automatické zálohování** - všechna data jsou bezpečně uložena v cloudu
+## 📖 Obsah
 
-### 👥 Uživatelské role
-- **Studenti** - registrace s e-mailem a heslem, pokrok synchronizován
-- **Učitel** - speciální účet `teacher@itgamifikace.cz` pro správu studentů
+- [O aplikaci](#-o-aplikaci)
+- [Funkce](#-funkce)
+- [Technologie](#-technologie)
+- [Struktura projektu](#-struktura-projektu)
+- [Instalace](#-instalace)
+- [Konfigurace](#-konfigurace)
+- [Použití](#-použití)
+- [API Reference](#-api-reference)
+- [Příspěvky](#-příspěvky)
+- [Licence](#-licence)
 
-## 🚀 Rychlý start
+## 🎯 O aplikaci
+
+IT Gamifikace je moderní webová aplikace určená pro výuku informatiky na základních školách. Aplikace kombinuje vzdělávací obsah s herními prvky, aby motivovala studenty k učení a rozvoji digitálních dovedností.
+
+### 🎨 Design filozofie
+- **Retro-arcade styl** - Inspirováno klasickými arkádovými hrami
+- **Responsive design** - Funguje na všech zařízeních
+- **Přístupnost** - Respektuje standardy accessibility
+- **Intuitivní UX** - Snadné ovládání pro děti
+
+### 🎮 Herní mechaniky
+- **XP systém** - Body za dokončené úkoly
+- **Odznaky** - 25+ odznaků k získání
+- **Žebříčky** - Soutěživost mezi studenty
+- **Denní výzvy** - Pravidelné aktivity
+- **Avatar systém** - Personalizace postavy
+
+## ✨ Funkce
+
+### 👨‍🎓 Pro studenty
+
+#### 🎯 Hlavní funkce
+- **Dashboard** - Přehled pokroku a aktivit
+- **Denní výzvy** - Každodenní kvízy a úkoly
+- **Témata** - Strukturovaný vzdělávací obsah
+- **Odznaky** - Systém úspěchů a ocenění
+- **Žebříček** - Porovnání s ostatními studenty
+
+#### 🕹️ Minihry
+- **Snake** - Klasická hra s IT tématikou
+- **Space Shooter** - Vesmírná střílečka
+- **TypingGame** - Rychlé psaní IT pojmů
+- **Leaderboard** - Skóre všech her
+
+#### 🎨 Personalizace
+- **Avatar Builder** - Vytvoření vlastní postavy
+- **Čepice** - Baseball, klobouk, koruna, čaroděj
+- **Oblečení** - 9 barev triček
+- **Vlasy** - 7 barev vlasů
+- **Oči** - 5 barev očí
+- **Doplňky** - Náhrdelníky a ozdoby
+
+### 👨‍🏫 Pro učitele
+
+#### 📊 Správa třídy
+- **Seznam studentů** - Přehled všech žáků
+- **Pokrok sledování** - XP, odznaky, skóre
+- **Přidávání odznaků** - Manuální udělování
+- **Mazání studentů** - Správa účtů
+
+#### 🎯 Vzdělávací nástroje
+- **Témata správa** - Vytváření nových témat
+- **Kvízy** - Vlastní denní výzvy
+- **Statistiky** - Detailní analýzy
+- **Export dat** - Vývoz výsledků
+
+### 🏆 Systém odznaků
+
+#### 📚 Vzdělávací odznaky
+- **Souborový šampion** - Organizace souborů
+- **Mistr klávesnice** - Klávesové zkratky
+- **Hardwarový expert** - Počítačové komponenty
+- **Internetový navigátor** - Bezpečnost na internetu
+- **Začínající programátor** - Základy programování
+
+#### 🎮 Herní odznaky
+- **Hadí mistr** - 20+ bodů ve Snake
+- **Hadí legenda** - 50+ bodů ve Snake
+- **Vesmírný obránce** - 10+ asteroidů
+- **Vesmírný hrdina** - 50+ asteroidů
+- **Rychlostní démon** - Výzva za <30s
+
+#### 🌟 Speciální odznaky
+- **První den** - Za první přihlášení
+- **Týdenní bojovník** - 7 dní v řadě
+- **Vytrvalý student** - 30 dní v řadě
+- **Ranní ptáče** - Přihlášení před 8:00
+- **Noční sova** - Přihlášení po 22:00
+
+## 🛠️ Technologie
+
+### Frontend
+- **React 18.2.0** - Moderní UI knihovna
+- **TypeScript 5.0** - Typová bezpečnost
+- **Tailwind CSS 3.3.0** - Utility-first CSS framework
+- **Vite 4.4.0** - Rychlý build tool
+
+### Backend & Databáze
+- **Firebase 10.0.0** - Backend-as-a-Service
+- **Firestore** - NoSQL databáze
+- **Firebase Auth** - Autentifikace
+- **Firebase Hosting** - Web hosting
+
+### Vývojové nástroje
+- **ESLint** - Linting kódu
+- **Prettier** - Formátování kódu
+- **PostCSS** - CSS processing
+- **Autoprefixer** - CSS vendor prefixes
+
+## 📁 Struktura projektu
+
+```
+gamifikace/
+├── 📁 src/
+│   ├── 📁 components/          # React komponenty
+│   │   ├── AvatarBuilder.tsx   # Editor avatarů
+│   │   ├── BadgeGrid.tsx       # Zobrazení odznaků
+│   │   ├── BonusTasks.tsx      # Bonusové úkoly
+│   │   ├── DailyQuest.tsx      # Denní výzvy
+│   │   ├── Leaderboard.tsx     # Žebříček
+│   │   ├── Login.tsx           # Přihlášení
+│   │   ├── SnakeGame.tsx       # Hra Snake
+│   │   ├── SpaceShooter.tsx    # Vesmírná střílečka
+│   │   ├── StudentDashboard.tsx # Dashboard studenta
+│   │   ├── TeacherDashboard.tsx # Dashboard učitele
+│   │   ├── TopicGrid.tsx       # Témata
+│   │   └── TypingGame.tsx      # Rychlé psaní
+│   ├── 📁 data/                # Datové soubory
+│   │   ├── firebase.ts         # Firebase konfigurace
+│   │   └── initialData.ts      # Počáteční data
+│   ├── 📁 services/            # Služby
+│   │   └── firestoreService.ts # Firestore operace
+│   ├── 📁 types/               # TypeScript typy
+│   │   └── index.ts            # Definice typů
+│   ├── 📁 utils/               # Utility funkce
+│   │   └── initializeFirestore.ts # Inicializace DB
+│   ├── App.tsx                 # Hlavní komponenta
+│   ├── main.tsx                # Entry point
+│   └── index.css               # Globální styly
+├── 📁 public/                  # Statické soubory
+├── 📄 firebase.json            # Firebase konfigurace
+├── 📄 package.json             # Závislosti
+├── 📄 tailwind.config.js       # Tailwind konfigurace
+├── 📄 tsconfig.json            # TypeScript konfigurace
+├── 📄 vite.config.ts           # Vite konfigurace
+└── 📄 README.md                # Tento soubor
+```
+
+## 🚀 Instalace
 
 ### Předpoklady
-- Node.js (verze 16 nebo vyšší)
-- Firebase projekt (viz `FIREBASE_SETUP.md`)
+- **Node.js** 18.0.0 nebo novější
+- **npm** 9.0.0 nebo novější
+- **Git** pro klonování repozitáře
 
-### Instalace
+### Kroky instalace
+
+1. **Klonování repozitáře**
 ```bash
-# Klonování repozitáře
-git clone <repository-url>
-cd gamifikace
+git clone https://github.com/Xplay2511/ITgamifikace.git
+cd ITgamifikace
+```
 
-# Instalace závislostí
+2. **Instalace závislostí**
+```bash
 npm install
+```
 
-# Spuštění vývojového serveru
+3. **Konfigurace Firebase**
+```bash
+# Vytvořte projekt na Firebase Console
+# Stáhněte firebaseConfig a upravte src/data/firebase.ts
+```
+
+4. **Spuštění vývojového serveru**
+```bash
 npm run dev
 ```
 
-### Firebase nastavení
-1. Vytvořte Firebase projekt na [console.firebase.google.com](https://console.firebase.google.com)
-2. Povolte Authentication (Email/Password) a Firestore Database
-3. Zkopírujte konfiguraci do `src/data/firebase.ts`
-4. Nastavte Firestore pravidla podle `FIREBASE_SETUP.md`
-5. Spusťte inicializaci dat
+5. **Build pro produkci**
+```bash
+npm run build
+```
 
-## 🎯 Funkce aplikace
+## ⚙️ Konfigurace
 
-### 👤 Student Dashboard
-- **Avatar Builder** - vytvoření pixelového avatara s mnoha možnostmi
-- **Badge Grid** - sbírání odznaků za různé úspěchy
-- **Topic Grid** - průchod tématy s XP odměnami
-- **Daily Quests** - denní výzvy s kvízovými otázkami
-- **Bonus Tasks** - minihry pro získání odznaků
+### Firebase Setup
 
-### 🎮 Minihry
-- **Snake Game** - klasická hra hada s leaderboardem
-- **Space Shooter** - střílečka s postupně se zvyšující obtížností
-- **Životy a obtížnost** - systém životů a postupné zvyšování náročnosti
+1. **Vytvořte projekt** na [Firebase Console](https://console.firebase.google.com/)
+2. **Povolte služby**:
+   - Authentication (Email/Password)
+   - Firestore Database
+   - Hosting
+3. **Nastavte pravidla** pro Firestore:
 
-### 👨‍🏫 Teacher Dashboard
-- **Správa studentů** - přehled všech studentů a jejich pokroku
-- **Přidávání XP** - možnost přidat XP body studentům
-- **Správa odznaků** - odemykání a odebírání odznaků
-- **Export dat** - export všech dat do JSON souboru
-- **Statistiky třídy** - přehled celkových statistik
+```javascript
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Studenti mohou číst/psát pouze svá data
+    match /students/{studentId} {
+      allow read, write: if request.auth != null && 
+        (request.auth.uid == studentId || 
+         get(/databases/$(database)/documents/teachers/$(request.auth.uid)).data.role == 'teacher');
+    }
+    
+    // Učitelé mohou číst všechna data
+    match /{document=**} {
+      allow read, write: if request.auth != null && 
+        get(/databases/$(database)/documents/teachers/$(request.auth.uid)).data.role == 'teacher';
+    }
+  }
+}
+```
 
-### 🏆 Leaderboard
-- **Snake skóre** - nejlepší výsledky ve hře Snake
-- **Space Shooter skóre** - nejlepší výsledky ve Space Shooter
-- **Aktualizace v reálném čase** - automatické aktualizace při nových skóre
+### Environment Variables
 
-## 🎨 Design a UX
+Vytvořte `.env` soubor v root adresáři:
 
-### Retro Arcade Styl
-- **Pixel fonty** - autentický retro vzhled
-- **Neon barvy** - jasné, výrazné barvy
-- **Animace** - plynulé přechody a efekty
-- **Responsivní design** - funkční na všech zařízeních
+```env
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+```
 
-### Avatar Builder
-- **Více možností** - vlasy, pleť, oči, tričko, čepice, doplňky
-- **Compact mód** - malý avatar v headeru
-- **Full editor** - kompletní editor s náhledem
+## 🎮 Použití
 
-## 🔧 Technologie
+### Pro studenty
 
-### Frontend
-- **React 18** - moderní React s hooks
-- **TypeScript** - typově bezpečný kód
-- **Tailwind CSS** - utility-first CSS framework
-- **Vite** - rychlý build tool
+1. **Registrace/Přihlášení**
+   - Zadejte email a heslo
+   - Vytvořte si avatar
+   - Začněte s denní výzvou
 
-### Backend & Databáze
-- **Firebase Authentication** - bezpečné přihlašování
-- **Firebase Firestore** - NoSQL databáze pro synchronizaci
-- **Cloud hosting** - nasazení na Vercel/Netlify
+2. **Denní aktivity**
+   - Dokončete denní kvíz
+   - Hrajte minihry
+   - Sbírejte odznaky
+   - Sledujte žebříček
 
-## 📊 Datová struktura
+3. **Personalizace**
+   - Upravte si avatar
+   - Změňte jméno
+   - Sledujte pokrok
 
-### Student Data (Firestore)
+### Pro učitele
+
+1. **Přihlášení**
+   - Použijte: `teacher@itgamifikace.cz`
+   - Heslo: `ucitel2024`
+
+2. **Správa třídy**
+   - Prohlížejte seznam studentů
+   - Sledujte pokrok
+   - Udělujte odznaky
+   - Exportujte data
+
+3. **Vzdělávací obsah**
+   - Vytvářejte nová témata
+   - Přidávejte kvízy
+   - Nastavujte odměny
+
+## 📚 API Reference
+
+### Typy dat
+
 ```typescript
-{
+interface Student {
   id: string;
   name: string;
   avatar: AvatarSettings;
@@ -109,100 +294,86 @@ npm run dev
   dailyQuestsCompleted: string[];
   totalQuestsCompleted: number;
 }
+
+interface Badge {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  code: string;
+  unlocked: boolean;
+  xpReward: number;
+  unlockMethod: 'code' | 'quiz' | 'game' | 'daily';
+}
+
+interface AvatarSettings {
+  hair: string;
+  skinColor: string;
+  shirtColor: string;
+  eyes: string;
+  mouth?: boolean;
+  hat?: string;
+  accessory?: string;
+}
 ```
 
-### Kolekce ve Firestore
-- `students/{userId}` - data jednotlivých studentů
-- `badges` - seznam všech odznaků
-- `topics` - seznam všech témat
-- `dailyQuests` - denní výzvy
-- `leaderboards` - leaderboard data
+### Hlavní funkce
 
-## 🚀 Nasazení
+```typescript
+// Autentifikace
+const login = (email: string, password: string): Promise<User>
+const register = (email: string, password: string): Promise<User>
+const logout = (): Promise<void>
 
-### Lokální vývoj
-```bash
-npm run dev
+// Student data
+const getStudent = (id: string): Promise<Student>
+const updateStudent = (id: string, data: Partial<Student>): Promise<void>
+const deleteStudent = (id: string): Promise<void>
+
+// Badges
+const unlockBadge = (studentId: string, badgeId: string): Promise<void>
+const getBadges = (): Promise<Badge[]>
+
+// Games
+const updateSnakeScore = (studentId: string, score: number): Promise<void>
+const updateSpaceScore = (studentId: string, score: number): Promise<void>
 ```
 
-### Produkční build
-```bash
-npm run build
-```
+## 🤝 Příspěvky
 
-### Nasazení na Vercel/Netlify
-1. Nahrajte kód na GitHub
-2. Propojte s Vercel/Netlify
-3. Nastavte environment variables pro Firebase
-4. Deploy!
+Příspěvky jsou vítány! Prosím dodržujte tyto kroky:
 
-## 🔒 Bezpečnost
+1. **Fork** repozitáře
+2. **Vytvořte feature branch** (`git checkout -b feature/AmazingFeature`)
+3. **Commit** změny (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** do branch (`git push origin feature/AmazingFeature`)
+5. **Otevřete Pull Request**
 
-### Firestore Rules
-- Studenti mohou číst/zapisovat pouze svá data
-- Učitel má přístup ke všem datům studentů
-- Leaderboard je veřejný pro přihlášené uživatele
+### Coding standards
+- Používejte **TypeScript** pro všechny nové soubory
+- Dodržujte **ESLint** pravidla
+- Pište **komentáře** k složitějším funkcím
+- Testujte na **různých zařízeních**
 
-### Autentizace
-- E-mail a heslo pro každého studenta
-- Bezpečné Firebase Authentication
-- Automatické odhlášení při neaktivitě
+## 📄 Licence
 
-## 📱 Kompatibilita
+Tento projekt je licencován pod **MIT License** - viz [LICENSE](LICENSE) soubor pro detaily.
 
-### Prohlížeče
-- Chrome 90+
-- Firefox 88+
-- Safari 14+
-- Edge 90+
+## 🙏 Poděkování
 
-### Zařízení
-- Desktop (Windows, macOS, Linux)
-- Tablet (iPad, Android)
-- Mobil (iPhone, Android)
+- **React Team** za úžasnou knihovnu
+- **Firebase Team** za backend služby
+- **Tailwind CSS** za CSS framework
+- **Vite** za rychlý build tool
+- **Všem přispěvatelům** a testerům
 
-## 🎯 Použití ve škole
+## 📞 Kontakt
 
-### Pro studenty
-1. **Registrace** - vytvoření účtu s e-mailem a heslem
-2. **Přihlášení** - přístup k pokroku odkudkoliv
-3. **Hraní** - sbírání XP, odznaků a řešení výzev
-4. **Synchronizace** - pokrok se automaticky ukládá
-
-### Pro učitele
-1. **Přihlášení** - speciální účet `teacher@itgamifikace.cz`
-2. **Monitoring** - sledování pokroku všech studentů
-3. **Správa** - přidávání XP, odznaků, export dat
-4. **Analýza** - statistiky třídy a výkonnosti
-
-## 🚨 Řešení problémů
-
-### Časté problémy
-- **Firebase konfigurace** - zkontrolujte `src/data/firebase.ts`
-- **Firestore pravidla** - ověřte nastavení v Firebase Console
-- **Autentizace** - zkontrolujte povolení Email/Password v Authentication
-
-### Logy a debugging
-- Otevřete konzoli prohlížeče (F12)
-- Zkontrolujte Firebase Console pro chyby
-- Ověřte síťové požadavky v Network tab
-
-## 📞 Podpora
-
-### Dokumentace
-- [Firebase Setup](FIREBASE_SETUP.md) - podrobný návod na nastavení
-- [Deployment](DEPLOYMENT.md) - návod na nasazení
-
-### Užitečné odkazy
-- [Firebase Console](https://console.firebase.google.com)
-- [Firebase Dokumentace](https://firebase.google.com/docs)
-- [Vercel](https://vercel.com) - hosting
-- [Netlify](https://netlify.com) - alternativní hosting
-
-## 🎉 Závěr
-
-Gamifikace Informatika je moderní, cloudově synchronizovaná aplikace pro motivující výuku informatiky. Studenti mohou pokračovat ve své práci odkudkoliv, učitelé mají přehled o pokroku celé třídy, a všechna data jsou bezpečně uložena v cloudu.
+- **Autor**: IT Gamifikace Team
+- **Email**: support@itgamifikace.cz
+- **GitHub**: [https://github.com/Xplay2511/ITgamifikace](https://github.com/Xplay2511/ITgamifikace)
+- **Live Demo**: [https://itgamifikace.web.app](https://itgamifikace.web.app)
 
 ---
 
-**Vytvořeno s ❤️ pro moderní výuku informatiky** 
+⭐ **Pokud se vám projekt líbí, dejte mu hvězdičku na GitHubu!** ⭐ 

@@ -6,6 +6,7 @@ import BonusTasks from './BonusTasks';
 import Leaderboard from './Leaderboard';
 import SnakeGame from './SnakeGame';
 import SpaceShooter from './SpaceShooter';
+import TypingGame from './TypingGame';
 import DailyQuestComponent from './DailyQuest';
 
 interface StudentDashboardProps {
@@ -41,6 +42,7 @@ const StudentDashboard: React.FC<StudentDashboardProps> = ({
 }) => {
   const [showSnakeGame, setShowSnakeGame] = useState(false);
   const [showSpaceShooter, setShowSpaceShooter] = useState(false);
+  const [showTypingGame, setShowTypingGame] = useState(false);
   const [codeInput, setCodeInput] = useState('');
   const [showNameDialog, setShowNameDialog] = useState(false);
   const [newName, setNewName] = useState(currentUser);
@@ -165,6 +167,15 @@ const StudentDashboard: React.FC<StudentDashboardProps> = ({
           onScoreUpdate={onSpaceScoreUpdate}
           currentScore={spaceScore}
         />
+      ) : showTypingGame ? (
+        <TypingGame
+          onClose={() => setShowTypingGame(false)}
+          onComplete={(score, accuracy) => {
+            // Zde by se měla přidat logika pro uložení skóre
+            console.log(`Typing game completed: ${score} points, ${accuracy}% accuracy`);
+            setShowTypingGame(false);
+          }}
+        />
       ) : (
         <div className="max-w-6xl mx-auto space-y-6">
           {/* Header */}
@@ -257,6 +268,7 @@ const StudentDashboard: React.FC<StudentDashboardProps> = ({
             <BonusTasks 
               onPlaySnake={() => setShowSnakeGame(true)}
               onPlaySpace={() => setShowSpaceShooter(true)}
+              onPlayTyping={() => setShowTypingGame(true)}
               snakeScore={snakeScore}
               spaceScore={spaceScore}
               snakeLeaderboard={snakeLeaderboard}

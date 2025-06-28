@@ -118,10 +118,37 @@ const AvatarBuilder: React.FC<AvatarBuilderProps> = ({
 
           {/* Čepice */}
           {settings.hat && (
-            <div 
-              className="absolute top-0 left-1/2 transform -translate-x-1/2 w-18 h-6 rounded-t-full"
-              style={{ backgroundColor: settings.hat === 'cap' ? '#E74C3C' : '#2C3E50' }}
-            />
+            <div className="absolute top-0 left-1/2 transform -translate-x-1/2">
+              {settings.hat === 'cap' && (
+                <div 
+                  className="w-20 h-8 rounded-t-full relative"
+                  style={{ backgroundColor: '#E74C3C' }}
+                >
+                  <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-16 h-2 bg-white rounded-full"></div>
+                </div>
+              )}
+              {settings.hat === 'hat' && (
+                <div 
+                  className="w-18 h-6 rounded-t-full"
+                  style={{ backgroundColor: '#2C3E50' }}
+                />
+              )}
+              {settings.hat === 'crown' && (
+                <div className="w-16 h-4 flex justify-center">
+                  <div className="w-2 h-4 bg-yellow-400 mx-0.5"></div>
+                  <div className="w-2 h-4 bg-yellow-400 mx-0.5"></div>
+                  <div className="w-2 h-4 bg-yellow-400 mx-0.5"></div>
+                  <div className="w-2 h-4 bg-yellow-400 mx-0.5"></div>
+                  <div className="w-2 h-4 bg-yellow-400 mx-0.5"></div>
+                </div>
+              )}
+              {settings.hat === 'wizard' && (
+                <div 
+                  className="w-12 h-8 rounded-t-full"
+                  style={{ backgroundColor: '#9B59B6' }}
+                />
+              )}
+            </div>
           )}
         </div>
       </div>
@@ -262,6 +289,8 @@ const AvatarBuilder: React.FC<AvatarBuilderProps> = ({
               <option value="none">Žádná</option>
               <option value="cap">Baseball čepice</option>
               <option value="hat">Klobouk</option>
+              <option value="crown">Koruna</option>
+              <option value="wizard">Čaroděj</option>
             </select>
           </div>
 

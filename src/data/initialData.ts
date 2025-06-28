@@ -100,6 +100,156 @@ export const initialBadges: Badge[] = [
     unlocked: false,
     xpReward: 90,
     unlockMethod: 'code'
+  },
+  {
+    id: 'first-day',
+    name: 'První den',
+    description: 'Přihlásil ses poprvé do aplikace',
+    icon: '🌟',
+    code: 'FIRSTDAY',
+    unlocked: false,
+    xpReward: 25,
+    unlockMethod: 'code'
+  },
+  {
+    id: 'week-warrior',
+    name: 'Týdenní bojovník',
+    description: 'Přihlásil ses 7 dní v řadě',
+    icon: '📅',
+    code: 'WEEK7',
+    unlocked: false,
+    xpReward: 100,
+    unlockMethod: 'daily'
+  },
+  {
+    id: 'xp-collector',
+    name: 'Sběratel XP',
+    description: 'Nasbíral jsi 1000 XP',
+    icon: '💎',
+    code: 'XP1000',
+    unlocked: false,
+    xpReward: 50,
+    unlockMethod: 'code'
+  },
+  {
+    id: 'badge-hunter',
+    name: 'Lovce odznaků',
+    description: 'Získal jsi 5 odznaků',
+    icon: '🏆',
+    code: 'BADGE5',
+    unlocked: false,
+    xpReward: 75,
+    unlockMethod: 'code'
+  },
+  {
+    id: 'snake-legend',
+    name: 'Hadí legenda',
+    description: 'Dosáhl jsi 50+ bodů ve hře Snake',
+    icon: '🐍👑',
+    code: 'snake50',
+    unlocked: false,
+    xpReward: 300,
+    unlockMethod: 'game'
+  },
+  {
+    id: 'space-hero',
+    name: 'Vesmírný hrdina',
+    description: 'Zničil jsi 50+ asteroidů ve Space Shooter',
+    icon: '🚀💫',
+    code: 'space50',
+    unlocked: false,
+    xpReward: 250,
+    unlockMethod: 'game'
+  },
+  {
+    id: 'perfect-score',
+    name: 'Perfektní skóre',
+    description: 'Získal jsi 100% v denní výzvě',
+    icon: '💯',
+    code: 'PERFECT100',
+    unlocked: false,
+    xpReward: 150,
+    unlockMethod: 'daily'
+  },
+  {
+    id: 'avatar-designer',
+    name: 'Designér avatarů',
+    description: 'Vytvořil jsi unikátní avatar',
+    icon: '🎨',
+    code: 'AVATAR2024',
+    unlocked: false,
+    xpReward: 60,
+    unlockMethod: 'code'
+  },
+  {
+    id: 'social-butterfly',
+    name: 'Společenský motýl',
+    description: 'Interagoval jsi s 5+ spolužáky',
+    icon: '🦋',
+    code: 'SOCIAL5',
+    unlocked: false,
+    xpReward: 80,
+    unlockMethod: 'code'
+  },
+  {
+    id: 'early-bird',
+    name: 'Ranní ptáče',
+    description: 'Přihlásil ses před 8:00 ráno',
+    icon: '🌅',
+    code: 'EARLYBIRD',
+    unlocked: false,
+    xpReward: 40,
+    unlockMethod: 'daily'
+  },
+  {
+    id: 'night-owl',
+    name: 'Noční sova',
+    description: 'Přihlásil ses po 22:00',
+    icon: '🦉',
+    code: 'NIGHTOWL',
+    unlocked: false,
+    xpReward: 40,
+    unlockMethod: 'daily'
+  },
+  {
+    id: 'speed-demon',
+    name: 'Rychlostní démon',
+    description: 'Dokončil jsi denní výzvu za méně než 30 sekund',
+    icon: '⚡',
+    code: 'SPEED30',
+    unlocked: false,
+    xpReward: 100,
+    unlockMethod: 'daily'
+  },
+  {
+    id: 'persistent-learner',
+    name: 'Vytrvalý student',
+    description: 'Přihlásil ses 30 dní v řadě',
+    icon: '📚',
+    code: 'PERSISTENT30',
+    unlocked: false,
+    xpReward: 500,
+    unlockMethod: 'daily'
+  },
+  {
+    id: 'helpful-friend',
+    name: 'Pomocný přítel',
+    description: 'Pomohl jsi 3 spolužákům s úkoly',
+    icon: '🤝',
+    code: 'HELPFUL3',
+    unlocked: false,
+    xpReward: 120,
+    unlockMethod: 'code'
+  },
+  {
+    id: 'creative-mind',
+    name: 'Kreativní mysl',
+    description: 'Vytvořil jsi vlastní téma nebo projekt',
+    icon: '🎭',
+    code: 'CREATIVE2024',
+    unlocked: false,
+    xpReward: 200,
+    unlockMethod: 'code'
   }
 ];
 

@@ -3,6 +3,7 @@ import React from 'react';
 interface BonusTasksProps {
   onPlaySnake: () => void;
   onPlaySpace: () => void;
+  onPlayTyping: () => void;
   snakeScore: number;
   spaceScore: number;
   snakeLeaderboard: { name: string; score: number; date: string }[];
@@ -12,6 +13,7 @@ interface BonusTasksProps {
 const BonusTasks: React.FC<BonusTasksProps> = ({ 
   onPlaySnake, 
   onPlaySpace,
+  onPlayTyping,
   snakeScore, 
   spaceScore,
   snakeLeaderboard,
@@ -82,6 +84,37 @@ const BonusTasks: React.FC<BonusTasksProps> = ({
           className="w-full arcade-button text-xs py-2"
         >
           🚀 Spustit hru
+        </button>
+      </div>
+
+      {/* Typing Game */}
+      <div className="arcade-card p-4">
+        <div className="flex items-center mb-3">
+          <div className="text-3xl mr-3">⌨️</div>
+          <div>
+            <h3 className="text-sm font-arcade text-arcade-dark">
+              Rychlé psaní
+            </h3>
+            <p className="text-xs font-arcade text-arcade-gray">
+              Napiš co nejvíce slov za 60 sekund
+            </p>
+          </div>
+        </div>
+        
+        <div className="mb-3">
+          <div className="text-xs font-arcade text-arcade-yellow">
+            Nová hra - zkus to!
+          </div>
+          <div className="text-xs font-arcade text-arcade-green mt-1">
+            +10 XP za každé správné slovo
+          </div>
+        </div>
+        
+        <button
+          onClick={onPlayTyping}
+          className="w-full arcade-button text-xs py-2"
+        >
+          ⌨️ Spustit hru
         </button>
       </div>
 

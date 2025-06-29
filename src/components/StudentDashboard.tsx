@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Badge, Topic, Student, DailyQuest } from '../types';
 import BadgeGrid from './BadgeGrid';
 import TopicGrid from './TopicGrid';
@@ -8,6 +8,9 @@ import SnakeGame from './SnakeGame';
 import SpaceShooter from './SpaceShooter';
 import TypingGame from './TypingGame';
 import DailyQuestComponent from './DailyQuest';
+import LevelUpAnimation from './LevelUpAnimation';
+import { getXpInCurrentLevel, getXpForNextLevel } from '../utils/initializeFirestore';
+import { soundEffects } from '../utils/soundEffects';
 
 interface StudentDashboardProps {
   currentUser: string;
@@ -46,14 +49,68 @@ const StudentDashboard: React.FC<StudentDashboardProps> = ({
   const [codeInput, setCodeInput] = useState('');
   const [showNameDialog, setShowNameDialog] = useState(false);
   const [newName, setNewName] = useState(currentUser);
+  
+  // Animace a efekty
+  const [showLevelUpAnimation, setShowLevelUpAnimation] = useState(false);
+  const [newLevel, setNewLevel] = useState(1);
+  const [xpGainAnimation, setXpGainAnimation] = useState(false);
+  const [progressPulse, setProgressPulse] = useState(false);
+  const [previousXp, setPreviousXp] = useState(0);
+  const [previousLevel, setPreviousLevel] = useState(1);
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
 
   const currentStudent = students.find(s => s.name === currentUser);
   const unlockedBadges = badges.filter(b => currentStudent?.badges.includes(b.id));
   const totalXP = currentStudent?.xp || 0;
+  const currentLevel = currentStudent?.level || 1;
+  const xpInCurrentLevel = getXpInCurrentLevel(totalXP);
+  const xpForNextLevel = getXpForNextLevel(currentLevel);
+  const progressPercentage = (xpInCurrentLevel / 300) * 100; // 300 XP na level
   const totalBadges = currentStudent?.badges.length || 0;
   const snakeScore = currentStudent?.snakeScore || 0;
   const spaceScore = currentStudent?.spaceScore || 0;
   const totalQuestsCompleted = currentStudent?.totalQuestsCompleted || 0;
+
+  // Sledování změn XP a levelu pro animace
+  useEffect(() => {
+    if (currentStudent) {
+      // XP animace
+      if (totalXP > previousXp) {
+        setXpGainAnimation(true);
+        setProgressPulse(true);
+        soundEffects.playXpGain();
+        
+        setTimeout(() => {
+          setXpGainAnimation(false);
+          setProgressPulse(false);
+        }, 600);
+      }
+
+      // Level-up animace
+      if (currentLevel > previousLevel) {
+        setNewLevel(currentLevel);
+        setShowLevelUpAnimation(true);
+        soundEffects.playLevelUp();
+      }
+
+      setPreviousXp(totalXP);
+      setPreviousLevel(currentLevel);
+    }
+  }, [totalXP, currentLevel, currentStudent, previousXp, previousLevel]);
+
+  // Sledování online/offline stavu
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   const handleCodeSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -155,6 +212,13 @@ const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-arcade-purple to-arcade-cyan p-4">
+      {/* Offline Indicator */}
+      {!isOnline && (
+        <div className="fixed top-0 left-0 right-0 bg-arcade-neon-orange text-arcade-dark text-center py-2 px-4 z-50 font-arcade text-sm">
+          📡 Offline režim - aplikace funguje offline
+        </div>
+      )}
+      
       {showSnakeGame ? (
         <SnakeGame 
           onClose={() => setShowSnakeGame(false)}
@@ -177,51 +241,54 @@ const StudentDashboard: React.FC<StudentDashboardProps> = ({
           }}
         />
       ) : (
-        <div className="max-w-6xl mx-auto space-y-6">
+        <div className="max-w-6xl mx-auto space-y-4 md:space-y-6 px-2 md:px-0">
           {/* Header */}
-          <div className="arcade-card p-6">
-            <div className="flex items-center justify-between mb-4">
+          <div className="arcade-card p-4 md:p-6">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4 space-y-4 md:space-y-0">
               <div className="flex items-center">
                 {renderAvatar(currentStudent?.avatar)}
-                <div className="ml-4">
-                  <h1 className="text-2xl font-arcade text-arcade-purple flex items-center gap-2">
+                <div className="ml-3 md:ml-4">
+                  <h1 className="text-lg md:text-2xl font-arcade text-arcade-purple flex items-center gap-2 flex-wrap">
                     Ahoj, {currentUser}! 👋
                     <button
-                      className="arcade-button text-xs ml-2"
+                      className="arcade-button text-xs ml-2 p-2 md:p-1"
                       onClick={() => setShowNameDialog(true)}
                       title="Změnit jméno"
                     >
                       ✏️
                     </button>
                   </h1>
-                  <p className="text-sm font-arcade text-arcade-gray">
-                    Úrovní: {Math.floor(totalXP / 100) + 1} | Výzev: {totalQuestsCompleted}
+                  <p className="text-xs md:text-sm font-arcade text-arcade-gray">
+                    Úrovní: {currentLevel} | Výzev: {totalQuestsCompleted}
                   </p>
                 </div>
               </div>
-              <div className="text-right">
-                <div className="text-sm font-arcade text-arcade-dark">
-                  XP: {totalXP} | Odznaky: {unlockedBadges.length}/{totalBadges}
+              <div className="text-left md:text-right">
+                <div className={`text-xs md:text-sm font-arcade text-arcade-dark ${xpGainAnimation ? 'xp-gain-text' : ''}`}>
+                  Level {currentLevel} | XP: {totalXP} | Odznaky: {unlockedBadges.length}/{totalBadges}
                 </div>
-                <div className="progress-bar mt-2">
+                <div className="text-xs font-arcade text-arcade-gray">
+                  {xpInCurrentLevel}/300 XP do dalšího levelu
+                </div>
+                <div className={`progress-bar mt-2 ${progressPulse ? 'xp-pulse' : ''}`}>
                   <div 
-                    className="progress-fill" 
-                    style={{ width: `${(totalXP % 100) / 100 * 100}%` }}
+                    className={`progress-fill ${xpGainAnimation ? 'xp-gain' : ''} ${currentLevel > previousLevel ? 'level-up' : ''}`}
+                    style={{ width: `${progressPercentage}%` }}
                   ></div>
                 </div>
               </div>
             </div>
             
             {/* Code Input */}
-            <form onSubmit={handleCodeSubmit} className="flex gap-2">
+            <form onSubmit={handleCodeSubmit} className="flex flex-col md:flex-row gap-2">
               <input
                 type="text"
                 value={codeInput}
                 onChange={(e) => setCodeInput(e.target.value)}
                 placeholder="Zadej kód pro odznak..."
-                className="flex-1 px-3 py-2 border-2 border-arcade-neon-green rounded font-arcade text-sm focus:border-arcade-neon-blue focus:outline-none"
+                className="flex-1 px-3 py-3 md:py-2 border-2 border-arcade-neon-green rounded font-arcade text-sm focus:border-arcade-neon-blue focus:outline-none"
               />
-              <button type="submit" className="arcade-button">
+              <button type="submit" className="arcade-button py-3 md:py-2 text-base md:text-sm">
                 🔓 Odemknout
               </button>
             </form>
@@ -229,7 +296,7 @@ const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
           {/* Daily Quest */}
           {todaysQuest && (
-            <div className="arcade-card p-6">
+            <div className="arcade-card p-4 md:p-6">
               <DailyQuestComponent
                 quest={todaysQuest}
                 onComplete={onDailyQuestComplete}
@@ -239,8 +306,8 @@ const StudentDashboard: React.FC<StudentDashboardProps> = ({
           )}
 
           {/* Badges Section */}
-          <div className="arcade-card p-6">
-            <h2 className="text-xl font-arcade text-arcade-purple mb-4">
+          <div className="arcade-card p-4 md:p-6">
+            <h2 className="text-lg md:text-xl font-arcade text-arcade-purple mb-4">
               🏅 Tvůj profil – získané odznaky
             </h2>
             <BadgeGrid 
@@ -250,19 +317,20 @@ const StudentDashboard: React.FC<StudentDashboardProps> = ({
           </div>
 
           {/* Topics Section */}
-          <div className="arcade-card p-6">
-            <h2 className="text-xl font-arcade text-arcade-purple mb-4">
+          <div className="arcade-card p-4 md:p-6">
+            <h2 className="text-lg md:text-xl font-arcade text-arcade-purple mb-4">
               🧩 Témata k procvičení
             </h2>
             <TopicGrid 
               topics={topics}
               onCompleteTopic={onCompleteTopic}
+              completedTopics={currentStudent?.topicsCompleted || []}
             />
           </div>
 
           {/* Bonus Tasks */}
-          <div className="arcade-card p-6">
-            <h2 className="text-xl font-arcade text-arcade-purple mb-4">
+          <div className="arcade-card p-4 md:p-6">
+            <h2 className="text-lg md:text-xl font-arcade text-arcade-purple mb-4">
               🕹️ Bonusové úkoly
             </h2>
             <BonusTasks 
@@ -277,8 +345,8 @@ const StudentDashboard: React.FC<StudentDashboardProps> = ({
           </div>
 
           {/* Leaderboard */}
-          <div className="arcade-card p-6">
-            <h2 className="text-xl font-arcade text-arcade-purple mb-4">
+          <div className="arcade-card p-4 md:p-6">
+            <h2 className="text-lg md:text-xl font-arcade text-arcade-purple mb-4">
               🏆 Žebříček
             </h2>
             <Leaderboard 
@@ -287,21 +355,28 @@ const StudentDashboard: React.FC<StudentDashboardProps> = ({
             />
           </div>
 
+          {/* Level Up Animation */}
+          <LevelUpAnimation
+            isVisible={showLevelUpAnimation}
+            newLevel={newLevel}
+            onAnimationComplete={() => setShowLevelUpAnimation(false)}
+          />
+
           {showNameDialog && (
-            <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
-              <div className="arcade-card p-6">
-                <h2 className="text-lg font-arcade text-arcade-purple mb-2">Změnit jméno</h2>
+            <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
+              <div className="arcade-card p-4 md:p-6 w-full max-w-md">
+                <h2 className="text-base md:text-lg font-arcade text-arcade-purple mb-2">Změnit jméno</h2>
                 <input
                   type="text"
                   value={newName}
                   onChange={e => setNewName(e.target.value)}
-                  className="px-3 py-2 border-2 border-arcade-neon-green rounded font-arcade text-sm mb-4 w-full"
+                  className="px-3 py-3 md:py-2 border-2 border-arcade-neon-green rounded font-arcade text-sm mb-4 w-full"
                   placeholder="Nové jméno"
                 />
-                <div className="flex gap-2 justify-end">
-                  <button className="arcade-button" onClick={() => setShowNameDialog(false)}>Zrušit</button>
+                <div className="flex flex-col md:flex-row gap-2 justify-end">
+                  <button className="arcade-button py-3 md:py-2 text-base md:text-sm" onClick={() => setShowNameDialog(false)}>Zrušit</button>
                   <button
-                    className="arcade-button"
+                    className="arcade-button py-3 md:py-2 text-base md:text-sm"
                     onClick={() => {
                       if (onUpdateName && newName.trim()) {
                         onUpdateName(newName.trim());

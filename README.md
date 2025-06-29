@@ -1,285 +1,84 @@
-# 🎮 IT Gamifikace - Gamifikovaná výuka informatiky
+# 🎮 IT Gamifikace - Vylepšená verze
 
-**Moderní webová aplikace pro gamifikovanou výuku informatiky na základních školách**
+Interaktivní vzdělávací platforma pro výuku IT s gamifikačními prvky, automatickými odznaky a vylepšenými tématy.
 
-[![React](https://img.shields.io/badge/React-18.2.0-blue.svg)](https://reactjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.3.0-38B2AC.svg)](https://tailwindcss.com/)
-[![Firebase](https://img.shields.io/badge/Firebase-10.0.0-orange.svg)](https://firebase.google.com/)
-[![Vite](https://img.shields.io/badge/Vite-4.4.0-purple.svg)](https://vitejs.dev/)
+## ✨ Nové funkce v této verzi
 
-## 📖 Obsah
+### 🔄 Automatická denní výzva
+- **Aktualizace každou půlnoc** - Nová denní výzva se automaticky vygeneruje každý den
+- **Náhodný výběr** - Systém vybere náhodnou otázku z databáze pro každý den
+- **Sledování splnění** - Kontrola, zda student již splnil dnešní výzvu
 
-- [O aplikaci](#-o-aplikaci)
-- [Funkce](#-funkce)
-- [Technologie](#-technologie)
-- [Struktura projektu](#-struktura-projektu)
-- [Instalace](#-instalace)
-- [Konfigurace](#-konfigurace)
-- [Použití](#-použití)
-- [API Reference](#-api-reference)
-- [Příspěvky](#-příspěvky)
-- [Licence](#-licence)
+### 🏅 Automatické odznaky
+- **Inteligentní systém** - Odznaky se odemykají automaticky na základě aktivit
+- **Různé typy podmínek**:
+  - `xp_threshold` - Nasbírání určitého množství XP
+  - `login_streak` - Přihlášení po určitý počet dní v řadě
+  - `badge_count` - Získání určitého počtu odznaků
+  - `quest_count` - Splnění určitého počtu denních výzev
+  - `game_score` - Dosažení určitého skóre ve hrách
+  - `login_time` - Přihlášení v určitou denní dobu
+  - `quest_speed` - Rychlé splnění denní výzvy
+  - `help_count` - Pomoc spolužákům
+  - `creative_projects` - Vytvoření vlastních projektů
 
-## 🎯 O aplikaci
+### 📚 Vylepšená témata
+- **Externí odkazy** - Každé téma má odkaz na studijní materiál
+- **Obtížnost** - Témata mají různé úrovně obtížnosti (easy, medium, hard)
+- **Časové odhady** - Odhad doby potřebné k dokončení
+- **Interaktivní otázky** - Studenti musí odpovědět na otázku po prostudování materiálu
+- **Kategorie** - Témata jsou rozdělena do kategorií (files, keyboard, hardware, security, programming, multimedia)
 
-IT Gamifikace je moderní webová aplikace určená pro výuku informatiky na základních školách. Aplikace kombinuje vzdělávací obsah s herními prvky, aby motivovala studenty k učení a rozvoji digitálních dovedností.
+### 🎯 Příklady automatických odznaků
+- **První den** - Za první přihlášení (25 XP)
+- **Týdenní bojovník** - 7 dní v řadě (100 XP)
+- **Sběratel XP** - 1000 XP (50 XP)
+- **Lovce odznaků** - 5 odznaků (75 XP)
+- **Hadí legenda** - 50+ bodů ve Snake (300 XP)
+- **Vesmírný hrdina** - 50+ asteroidů (250 XP)
+- **Ranní ptáče** - Přihlášení před 8:00 (40 XP)
+- **Noční sova** - Přihlášení po 22:00 (40 XP)
+- **Rychlostní démon** - Výzva za <30s (100 XP)
+- **Vytrvalý student** - 30 dní v řadě (500 XP)
 
-### 🎨 Design filozofie
-- **Retro-arcade styl** - Inspirováno klasickými arkádovými hrami
-- **Responsive design** - Funguje na všech zařízeních
-- **Přístupnost** - Respektuje standardy accessibility
-- **Intuitivní UX** - Snadné ovládání pro děti
+## 🚀 Instalace a nasazení
 
-### 🎮 Herní mechaniky
-- **XP systém** - Body za dokončené úkoly
-- **Odznaky** - 25+ odznaků k získání
-- **Žebříčky** - Soutěživost mezi studenty
-- **Denní výzvy** - Pravidelné aktivity
-- **Avatar systém** - Personalizace postavy
-
-## ✨ Funkce
-
-### 👨‍🎓 Pro studenty
-
-#### 🎯 Hlavní funkce
-- **Dashboard** - Přehled pokroku a aktivit
-- **Denní výzvy** - Každodenní kvízy a úkoly
-- **Témata** - Strukturovaný vzdělávací obsah
-- **Odznaky** - Systém úspěchů a ocenění
-- **Žebříček** - Porovnání s ostatními studenty
-
-#### 🕹️ Minihry
-- **Snake** - Klasická hra s IT tématikou
-- **Space Shooter** - Vesmírná střílečka
-- **TypingGame** - Rychlé psaní IT pojmů
-- **Leaderboard** - Skóre všech her
-
-#### 🎨 Personalizace
-- **Avatar Builder** - Vytvoření vlastní postavy
-- **Čepice** - Baseball, klobouk, koruna, čaroděj
-- **Oblečení** - 9 barev triček
-- **Vlasy** - 7 barev vlasů
-- **Oči** - 5 barev očí
-- **Doplňky** - Náhrdelníky a ozdoby
-
-### 👨‍🏫 Pro učitele
-
-#### 📊 Správa třídy
-- **Seznam studentů** - Přehled všech žáků
-- **Pokrok sledování** - XP, odznaky, skóre
-- **Přidávání odznaků** - Manuální udělování
-- **Mazání studentů** - Správa účtů
-
-#### 🎯 Vzdělávací nástroje
-- **Témata správa** - Vytváření nových témat
-- **Kvízy** - Vlastní denní výzvy
-- **Statistiky** - Detailní analýzy
-- **Export dat** - Vývoz výsledků
-
-### 🏆 Systém odznaků
-
-#### 📚 Vzdělávací odznaky
-- **Souborový šampion** - Organizace souborů
-- **Mistr klávesnice** - Klávesové zkratky
-- **Hardwarový expert** - Počítačové komponenty
-- **Internetový navigátor** - Bezpečnost na internetu
-- **Začínající programátor** - Základy programování
-
-#### 🎮 Herní odznaky
-- **Hadí mistr** - 20+ bodů ve Snake
-- **Hadí legenda** - 50+ bodů ve Snake
-- **Vesmírný obránce** - 10+ asteroidů
-- **Vesmírný hrdina** - 50+ asteroidů
-- **Rychlostní démon** - Výzva za <30s
-
-#### 🌟 Speciální odznaky
-- **První den** - Za první přihlášení
-- **Týdenní bojovník** - 7 dní v řadě
-- **Vytrvalý student** - 30 dní v řadě
-- **Ranní ptáče** - Přihlášení před 8:00
-- **Noční sova** - Přihlášení po 22:00
-
-## 🛠️ Technologie
-
-### Frontend
-- **React 18.2.0** - Moderní UI knihovna
-- **TypeScript 5.0** - Typová bezpečnost
-- **Tailwind CSS 3.3.0** - Utility-first CSS framework
-- **Vite 4.4.0** - Rychlý build tool
-
-### Backend & Databáze
-- **Firebase 10.0.0** - Backend-as-a-Service
-- **Firestore** - NoSQL databáze
-- **Firebase Auth** - Autentifikace
-- **Firebase Hosting** - Web hosting
-
-### Vývojové nástroje
-- **ESLint** - Linting kódu
-- **Prettier** - Formátování kódu
-- **PostCSS** - CSS processing
-- **Autoprefixer** - CSS vendor prefixes
-
-## 📁 Struktura projektu
-
-```
-gamifikace/
-├── 📁 src/
-│   ├── 📁 components/          # React komponenty
-│   │   ├── AvatarBuilder.tsx   # Editor avatarů
-│   │   ├── BadgeGrid.tsx       # Zobrazení odznaků
-│   │   ├── BonusTasks.tsx      # Bonusové úkoly
-│   │   ├── DailyQuest.tsx      # Denní výzvy
-│   │   ├── Leaderboard.tsx     # Žebříček
-│   │   ├── Login.tsx           # Přihlášení
-│   │   ├── SnakeGame.tsx       # Hra Snake
-│   │   ├── SpaceShooter.tsx    # Vesmírná střílečka
-│   │   ├── StudentDashboard.tsx # Dashboard studenta
-│   │   ├── TeacherDashboard.tsx # Dashboard učitele
-│   │   ├── TopicGrid.tsx       # Témata
-│   │   └── TypingGame.tsx      # Rychlé psaní
-│   ├── 📁 data/                # Datové soubory
-│   │   ├── firebase.ts         # Firebase konfigurace
-│   │   └── initialData.ts      # Počáteční data
-│   ├── 📁 services/            # Služby
-│   │   └── firestoreService.ts # Firestore operace
-│   ├── 📁 types/               # TypeScript typy
-│   │   └── index.ts            # Definice typů
-│   ├── 📁 utils/               # Utility funkce
-│   │   └── initializeFirestore.ts # Inicializace DB
-│   ├── App.tsx                 # Hlavní komponenta
-│   ├── main.tsx                # Entry point
-│   └── index.css               # Globální styly
-├── 📁 public/                  # Statické soubory
-├── 📄 firebase.json            # Firebase konfigurace
-├── 📄 package.json             # Závislosti
-├── 📄 tailwind.config.js       # Tailwind konfigurace
-├── 📄 tsconfig.json            # TypeScript konfigurace
-├── 📄 vite.config.ts           # Vite konfigurace
-└── 📄 README.md                # Tento soubor
-```
-
-## 🚀 Instalace
-
-### Předpoklady
-- **Node.js** 18.0.0 nebo novější
-- **npm** 9.0.0 nebo novější
-- **Git** pro klonování repozitáře
-
-### Kroky instalace
-
-1. **Klonování repozitáře**
+### 1. Klonování repozitáře
 ```bash
-git clone https://github.com/Xplay2511/ITgamifikace.git
-cd ITgamifikace
+git clone https://github.com/vase-username/gamifikace.git
+cd gamifikace
 ```
 
-2. **Instalace závislostí**
+### 2. Instalace závislostí
 ```bash
 npm install
 ```
 
-3. **Konfigurace Firebase**
-```bash
-# Vytvořte projekt na Firebase Console
-# Stáhněte firebaseConfig a upravte src/data/firebase.ts
-```
+### 3. Konfigurace Firebase
+1. Vytvořte nový projekt na [Firebase Console](https://console.firebase.google.com)
+2. Povolte Authentication (Email/Password)
+3. Vytvořte Firestore Database
+4. Zkopírujte konfiguraci do `src/data/firebase.ts`
 
-4. **Spuštění vývojového serveru**
+### 4. Inicializace dat
 ```bash
 npm run dev
 ```
+Při prvním spuštění se automaticky vytvoří:
+- Odznaky s automatickou logikou
+- Témata s externími odkazy
+- Denní výzvy
+- Výchozí nastavení
 
-5. **Build pro produkci**
+### 5. Nasazení na Firebase Hosting
 ```bash
 npm run build
+firebase deploy
 ```
 
-## ⚙️ Konfigurace
+## 📊 Struktura dat
 
-### Firebase Setup
-
-1. **Vytvořte projekt** na [Firebase Console](https://console.firebase.google.com/)
-2. **Povolte služby**:
-   - Authentication (Email/Password)
-   - Firestore Database
-   - Hosting
-3. **Nastavte pravidla** pro Firestore:
-
-```javascript
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    // Studenti mohou číst/psát pouze svá data
-    match /students/{studentId} {
-      allow read, write: if request.auth != null && 
-        (request.auth.uid == studentId || 
-         get(/databases/$(database)/documents/teachers/$(request.auth.uid)).data.role == 'teacher');
-    }
-    
-    // Učitelé mohou číst všechna data
-    match /{document=**} {
-      allow read, write: if request.auth != null && 
-        get(/databases/$(database)/documents/teachers/$(request.auth.uid)).data.role == 'teacher';
-    }
-  }
-}
-```
-
-### Environment Variables
-
-Vytvořte `.env` soubor v root adresáři:
-
-```env
-VITE_FIREBASE_API_KEY=your_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-VITE_FIREBASE_PROJECT_ID=your_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-VITE_FIREBASE_APP_ID=your_app_id
-```
-
-## 🎮 Použití
-
-### Pro studenty
-
-1. **Registrace/Přihlášení**
-   - Zadejte email a heslo
-   - Vytvořte si avatar
-   - Začněte s denní výzvou
-
-2. **Denní aktivity**
-   - Dokončete denní kvíz
-   - Hrajte minihry
-   - Sbírejte odznaky
-   - Sledujte žebříček
-
-3. **Personalizace**
-   - Upravte si avatar
-   - Změňte jméno
-   - Sledujte pokrok
-
-### Pro učitele
-
-1. **Přihlášení**
-   - Použijte: `teacher@itgamifikace.cz`
-   - Heslo: `ucitel2024`
-
-2. **Správa třídy**
-   - Prohlížejte seznam studentů
-   - Sledujte pokrok
-   - Udělujte odznaky
-   - Exportujte data
-
-3. **Vzdělávací obsah**
-   - Vytvářejte nová témata
-   - Přidávejte kvízy
-   - Nastavujte odměny
-
-## 📚 API Reference
-
-### Typy dat
-
+### Student
 ```typescript
 interface Student {
   id: string;
@@ -293,8 +92,17 @@ interface Student {
   lastActive: string;
   dailyQuestsCompleted: string[];
   totalQuestsCompleted: number;
+  loginStreak: number;           // Nové
+  lastLoginDate: string;         // Nové
+  topicsCompleted: string[];     // Nové
+  typingScore: number;           // Nové
+  helpCount: number;             // Nové
+  creativeProjects: number;      // Nové
 }
+```
 
+### Badge s automatickou logikou
+```typescript
 interface Badge {
   id: string;
   name: string;
@@ -303,77 +111,106 @@ interface Badge {
   code: string;
   unlocked: boolean;
   xpReward: number;
-  unlockMethod: 'code' | 'quiz' | 'game' | 'daily';
-}
-
-interface AvatarSettings {
-  hair: string;
-  skinColor: string;
-  shirtColor: string;
-  eyes: string;
-  mouth?: boolean;
-  hat?: string;
-  accessory?: string;
+  unlockMethod: 'code' | 'quiz' | 'game' | 'daily' | 'automatic';
+  autoUnlockCondition?: {
+    type: 'xp_threshold' | 'login_streak' | 'badge_count' | 'quest_count' | 'game_score' | 'login_time' | 'quest_speed' | 'help_count' | 'creative_projects';
+    value: number;
+    description: string;
+  };
 }
 ```
 
-### Hlavní funkce
-
+### Vylepšené téma
 ```typescript
-// Autentifikace
-const login = (email: string, password: string): Promise<User>
-const register = (email: string, password: string): Promise<User>
-const logout = (): Promise<void>
-
-// Student data
-const getStudent = (id: string): Promise<Student>
-const updateStudent = (id: string, data: Partial<Student>): Promise<void>
-const deleteStudent = (id: string): Promise<void>
-
-// Badges
-const unlockBadge = (studentId: string, badgeId: string): Promise<void>
-const getBadges = (): Promise<Badge[]>
-
-// Games
-const updateSnakeScore = (studentId: string, score: number): Promise<void>
-const updateSpaceScore = (studentId: string, score: number): Promise<void>
+interface Topic {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  completed: boolean;
+  xpReward: number;
+  externalLink?: string;         // Nové
+  externalDescription?: string;  // Nové
+  question?: string;             // Nové
+  answer?: string;               // Nové
+  difficulty: 'easy' | 'medium' | 'hard';  // Nové
+  category: string;              // Nové
+  estimatedTime: number;         // Nové
+}
 ```
 
-## 🤝 Příspěvky
+## 🔧 Technické detaily
 
-Příspěvky jsou vítány! Prosím dodržujte tyto kroky:
+### Automatické odznaky
+- Kontrola se provádí při každé aktivitě (přihlášení, hry, splnění témat)
+- Systém automaticky přiděluje XP a odemyká odznaky
+- Notifikace o nových odznacích
 
-1. **Fork** repozitáře
-2. **Vytvořte feature branch** (`git checkout -b feature/AmazingFeature`)
-3. **Commit** změny (`git commit -m 'Add some AmazingFeature'`)
-4. **Push** do branch (`git push origin feature/AmazingFeature`)
-5. **Otevřete Pull Request**
+### Denní výzvy
+- Automatická generace nové výzvy každou půlnoc
+- Náhodný výběr z databáze otázek
+- Sledování splnění pro každého studenta
 
-### Coding standards
-- Používejte **TypeScript** pro všechny nové soubory
-- Dodržujte **ESLint** pravidla
-- Pište **komentáře** k složitějším funkcím
-- Testujte na **různých zařízeních**
+### Vylepšená témata
+- Modal s externím odkazem a otázkou
+- Validace odpovědi před splněním
+- Různé obtížnosti a časové odhady
 
-## 📄 Licence
+## 🎮 Použití
 
-Tento projekt je licencován pod **MIT License** - viz [LICENSE](LICENSE) soubor pro detaily.
+### Pro studenty
+1. Registrace s e-mailem a heslem
+2. Vytvoření avataru
+3. Splnění denní výzvy
+4. Procvičování témat s externími odkazy
+5. Hraní her pro získání XP
+6. Automatické získávání odznaků
 
-## 🙏 Poděkování
+### Pro učitele
+1. Přihlášení s `teacher@itgamifikace.cz`
+2. Přehled všech studentů
+3. Správa odznaků a kódů
+4. Export dat pro analýzu
 
-- **React Team** za úžasnou knihovnu
-- **Firebase Team** za backend služby
-- **Tailwind CSS** za CSS framework
-- **Vite** za rychlý build tool
-- **Všem přispěvatelům** a testerům
+## 🔒 Bezpečnost
+- Firebase Authentication
+- Firestore Security Rules
+- Validace vstupů
+- Bezpečné externí odkazy
 
-## 📞 Kontakt
+## 📱 Kompatibilita
+- Moderní prohlížeče (Chrome, Firefox, Safari, Edge)
+- Responsive design pro mobilní zařízení
+- Offline-ready s Service Workers
 
-- **Autor**: IT Gamifikace Team
-- **Email**: support@itgamifikace.cz
-- **GitHub**: [https://github.com/Xplay2511/ITgamifikace](https://github.com/Xplay2511/ITgamifikace)
-- **Live Demo**: [https://itgamifikace.web.app](https://itgamifikace.web.app)
+## 🚀 Nasazení na GitHub a Firebase
+
+### 1. Push na GitHub
+```bash
+git add .
+git commit -m "Vylepšená verze s automatickými odznaky a vylepšenými tématy"
+git push origin main
+```
+
+### 2. Nasazení na Firebase
+```bash
+npm run build
+firebase deploy
+```
+
+### 3. Ověření nasazení
+1. Zkontrolujte Firebase Console
+2. Otestujte nové funkce
+3. Ověřte automatické odznaky
+4. Zkontrolujte denní výzvy
+
+## 🎯 Další vylepšení
+- Push notifikace
+- Offline režim
+- Pokročilé analytiky
+- Sociální funkce
+- AI tutor
 
 ---
 
-⭐ **Pokud se vám projekt líbí, dejte mu hvězdičku na GitHubu!** ⭐ 
+**Vytvořeno s ❤️ pro vzdělávání v IT** 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DailyQuest as DailyQuestType } from '../types';
 
 interface DailyQuestProps {
@@ -11,6 +11,29 @@ const DailyQuest: React.FC<DailyQuestProps> = ({ quest, onComplete, isCompleted 
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
+  const [timeUntilNextQuest, setTimeUntilNextQuest] = useState('');
+
+  // Výpočet času do další denní výzvy
+  useEffect(() => {
+    const updateTimeUntilNextQuest = () => {
+      const now = new Date();
+      const tomorrow = new Date(now);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      tomorrow.setHours(0, 0, 0, 0);
+      
+      const diff = tomorrow.getTime() - now.getTime();
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      setTimeUntilNextQuest(`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+    };
+
+    updateTimeUntilNextQuest();
+    const interval = setInterval(updateTimeUntilNextQuest, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handleAnswerSelect = (answerIndex: number) => {
     if (isCompleted || showResult) return;
@@ -63,8 +86,11 @@ const DailyQuest: React.FC<DailyQuestProps> = ({ quest, onComplete, isCompleted 
             </p>
           </div>
         </div>
-        <div className="text-sm font-arcade text-arcade-dark">
+        <div className="text-sm font-arcade text-arcade-dark mb-3">
           {quest.question}
+        </div>
+        <div className="text-xs font-arcade text-arcade-gray">
+          ⏰ Další výzva za: {timeUntilNextQuest}
         </div>
       </div>
     );
@@ -132,6 +158,9 @@ const DailyQuest: React.FC<DailyQuestProps> = ({ quest, onComplete, isCompleted 
       <div className="mt-4 text-center">
         <p className="text-xs font-arcade text-arcade-gray">
           Odpověď správně = +{quest.xpReward} XP
+        </p>
+        <p className="text-xs font-arcade text-arcade-gray mt-1">
+          ⏰ Další výzva za: {timeUntilNextQuest}
         </p>
       </div>
     </div>

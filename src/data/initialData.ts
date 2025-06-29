@@ -49,7 +49,12 @@ export const initialBadges: Badge[] = [
     code: 'snakepro20',
     unlocked: false,
     xpReward: 150,
-    unlockMethod: 'game'
+    unlockMethod: 'automatic',
+    autoUnlockCondition: {
+      type: 'game_score',
+      value: 20,
+      description: 'Dosáhni 20+ bodů ve hře Snake'
+    }
   },
   {
     id: 'space-defender',
@@ -59,7 +64,12 @@ export const initialBadges: Badge[] = [
     code: 'space10',
     unlocked: false,
     xpReward: 120,
-    unlockMethod: 'game'
+    unlockMethod: 'automatic',
+    autoUnlockCondition: {
+      type: 'game_score',
+      value: 10,
+      description: 'Znič 10+ asteroidů ve Space Shooter'
+    }
   },
   {
     id: 'quiz-champion',
@@ -69,7 +79,12 @@ export const initialBadges: Badge[] = [
     code: 'quiz10',
     unlocked: false,
     xpReward: 80,
-    unlockMethod: 'daily'
+    unlockMethod: 'automatic',
+    autoUnlockCondition: {
+      type: 'quest_count',
+      value: 10,
+      description: 'Splň 10 denních výzev'
+    }
   },
   {
     id: 'coding-beginner',
@@ -109,7 +124,12 @@ export const initialBadges: Badge[] = [
     code: 'FIRSTDAY',
     unlocked: false,
     xpReward: 25,
-    unlockMethod: 'code'
+    unlockMethod: 'automatic',
+    autoUnlockCondition: {
+      type: 'login_streak',
+      value: 1,
+      description: 'Přihlas se poprvé do aplikace'
+    }
   },
   {
     id: 'week-warrior',
@@ -119,7 +139,12 @@ export const initialBadges: Badge[] = [
     code: 'WEEK7',
     unlocked: false,
     xpReward: 100,
-    unlockMethod: 'daily'
+    unlockMethod: 'automatic',
+    autoUnlockCondition: {
+      type: 'login_streak',
+      value: 7,
+      description: 'Přihlas se 7 dní v řadě'
+    }
   },
   {
     id: 'xp-collector',
@@ -129,7 +154,12 @@ export const initialBadges: Badge[] = [
     code: 'XP1000',
     unlocked: false,
     xpReward: 50,
-    unlockMethod: 'code'
+    unlockMethod: 'automatic',
+    autoUnlockCondition: {
+      type: 'xp_threshold',
+      value: 1000,
+      description: 'Nasbírej 1000 XP'
+    }
   },
   {
     id: 'badge-hunter',
@@ -139,7 +169,12 @@ export const initialBadges: Badge[] = [
     code: 'BADGE5',
     unlocked: false,
     xpReward: 75,
-    unlockMethod: 'code'
+    unlockMethod: 'automatic',
+    autoUnlockCondition: {
+      type: 'badge_count',
+      value: 5,
+      description: 'Získej 5 odznaků'
+    }
   },
   {
     id: 'snake-legend',
@@ -149,7 +184,12 @@ export const initialBadges: Badge[] = [
     code: 'snake50',
     unlocked: false,
     xpReward: 300,
-    unlockMethod: 'game'
+    unlockMethod: 'automatic',
+    autoUnlockCondition: {
+      type: 'game_score',
+      value: 50,
+      description: 'Dosáhni 50+ bodů ve hře Snake'
+    }
   },
   {
     id: 'space-hero',
@@ -159,7 +199,12 @@ export const initialBadges: Badge[] = [
     code: 'space50',
     unlocked: false,
     xpReward: 250,
-    unlockMethod: 'game'
+    unlockMethod: 'automatic',
+    autoUnlockCondition: {
+      type: 'game_score',
+      value: 50,
+      description: 'Znič 50+ asteroidů ve Space Shooter'
+    }
   },
   {
     id: 'perfect-score',
@@ -169,7 +214,12 @@ export const initialBadges: Badge[] = [
     code: 'PERFECT100',
     unlocked: false,
     xpReward: 150,
-    unlockMethod: 'daily'
+    unlockMethod: 'automatic',
+    autoUnlockCondition: {
+      type: 'quest_speed',
+      value: 30,
+      description: 'Dokonči denní výzvu za méně než 30 sekund'
+    }
   },
   {
     id: 'avatar-designer',
@@ -199,7 +249,12 @@ export const initialBadges: Badge[] = [
     code: 'EARLYBIRD',
     unlocked: false,
     xpReward: 40,
-    unlockMethod: 'daily'
+    unlockMethod: 'automatic',
+    autoUnlockCondition: {
+      type: 'login_time',
+      value: 8,
+      description: 'Přihlas se před 8:00 ráno'
+    }
   },
   {
     id: 'night-owl',
@@ -209,7 +264,12 @@ export const initialBadges: Badge[] = [
     code: 'NIGHTOWL',
     unlocked: false,
     xpReward: 40,
-    unlockMethod: 'daily'
+    unlockMethod: 'automatic',
+    autoUnlockCondition: {
+      type: 'login_time',
+      value: 22,
+      description: 'Přihlas se po 22:00'
+    }
   },
   {
     id: 'speed-demon',
@@ -219,7 +279,12 @@ export const initialBadges: Badge[] = [
     code: 'SPEED30',
     unlocked: false,
     xpReward: 100,
-    unlockMethod: 'daily'
+    unlockMethod: 'automatic',
+    autoUnlockCondition: {
+      type: 'quest_speed',
+      value: 30,
+      description: 'Dokonči denní výzvu za méně než 30 sekund'
+    }
   },
   {
     id: 'persistent-learner',
@@ -229,7 +294,12 @@ export const initialBadges: Badge[] = [
     code: 'PERSISTENT30',
     unlocked: false,
     xpReward: 500,
-    unlockMethod: 'daily'
+    unlockMethod: 'automatic',
+    autoUnlockCondition: {
+      type: 'login_streak',
+      value: 30,
+      description: 'Přihlas se 30 dní v řadě'
+    }
   },
   {
     id: 'helpful-friend',
@@ -239,7 +309,12 @@ export const initialBadges: Badge[] = [
     code: 'HELPFUL3',
     unlocked: false,
     xpReward: 120,
-    unlockMethod: 'code'
+    unlockMethod: 'automatic',
+    autoUnlockCondition: {
+      type: 'help_count',
+      value: 3,
+      description: 'Pomoz 3 spolužákům s úkoly'
+    }
   },
   {
     id: 'creative-mind',
@@ -249,7 +324,12 @@ export const initialBadges: Badge[] = [
     code: 'CREATIVE2024',
     unlocked: false,
     xpReward: 200,
-    unlockMethod: 'code'
+    unlockMethod: 'automatic',
+    autoUnlockCondition: {
+      type: 'creative_projects',
+      value: 1,
+      description: 'Vytvoř vlastní projekt'
+    }
   }
 ];
 
@@ -260,7 +340,14 @@ export const initialTopics: Topic[] = [
     description: 'Nauč se správně organizovat soubory a složky',
     icon: '📁',
     completed: false,
-    xpReward: 30
+    xpReward: 30,
+    difficulty: 'easy',
+    category: 'files',
+    estimatedTime: 15,
+    externalLink: 'https://edu.gcfglobal.org/cs/windowsbasics/working-with-files/1/',
+    externalDescription: 'Prostuduj si základy práce se soubory a složkami',
+    question: 'Jaký je rozdíl mezi souborem a složkou?',
+    answer: 'Soubor obsahuje data, složka organizuje soubory'
   },
   {
     id: 'keyboard-shortcuts',
@@ -268,7 +355,14 @@ export const initialTopics: Topic[] = [
     description: 'Zrychli svou práci s klávesovými zkratkami',
     icon: '⌨️',
     completed: false,
-    xpReward: 40
+    xpReward: 40,
+    difficulty: 'easy',
+    category: 'keyboard',
+    estimatedTime: 20,
+    externalLink: 'https://support.microsoft.com/cs-cz/windows/kl%C3%A1vesov%C3%A9-zkratky-ve-windows-dcc61a57-8ff0-cffe-9796-cb9706c75eec',
+    externalDescription: 'Nauč se nejdůležitější klávesové zkratky Windows',
+    question: 'Jaká klávesová zkratka slouží k kopírování?',
+    answer: 'Ctrl+C'
   },
   {
     id: 'computer-parts',
@@ -276,7 +370,14 @@ export const initialTopics: Topic[] = [
     description: 'Poznej části počítače a jejich funkce',
     icon: '💻',
     completed: false,
-    xpReward: 50
+    xpReward: 50,
+    difficulty: 'medium',
+    category: 'hardware',
+    estimatedTime: 25,
+    externalLink: 'https://www.khanacademy.org/computing/computers-and-internet/xcae6f4a7ff015e7d:computers/xcae6f4a7ff015e7d:computer-components/a/computer-components-introduction',
+    externalDescription: 'Seznam se s hlavními komponentami počítače',
+    question: 'Co je to CPU a jakou má funkci?',
+    answer: 'CPU je procesor, který zpracovává data a řídí počítač'
   },
   {
     id: 'internet-safety',
@@ -284,7 +385,14 @@ export const initialTopics: Topic[] = [
     description: 'Nauč se bezpečně používat internet',
     icon: '🔒',
     completed: false,
-    xpReward: 35
+    xpReward: 35,
+    difficulty: 'medium',
+    category: 'security',
+    estimatedTime: 30,
+    externalLink: 'https://www.saferinternet.cz/',
+    externalDescription: 'Základy bezpečnosti na internetu pro děti',
+    question: 'Jak poznáš, že je web bezpečný?',
+    answer: 'Podle HTTPS protokolu a zeleného zámku v adresním řádku'
   },
   {
     id: 'basic-programming',
@@ -292,7 +400,14 @@ export const initialTopics: Topic[] = [
     description: 'První kroky v programování',
     icon: '👨‍💻',
     completed: false,
-    xpReward: 60
+    xpReward: 60,
+    difficulty: 'hard',
+    category: 'programming',
+    estimatedTime: 45,
+    externalLink: 'https://scratch.mit.edu/',
+    externalDescription: 'Začni programovat s vizuálním jazykem Scratch',
+    question: 'Co je to API a k čemu slouží?',
+    answer: 'API je rozhraní, které umožňuje programům komunikovat mezi sebou'
   },
   {
     id: 'presentations',
@@ -300,7 +415,14 @@ export const initialTopics: Topic[] = [
     description: 'Vytvářej působivé prezentace',
     icon: '📊',
     completed: false,
-    xpReward: 45
+    xpReward: 45,
+    difficulty: 'medium',
+    category: 'multimedia',
+    estimatedTime: 35,
+    externalLink: 'https://support.google.com/presentation/answer/4492226?hl=cs',
+    externalDescription: 'Nauč se vytvářet prezentace v Google Slides',
+    question: 'Kolik bodů by měl mít jeden slide prezentace?',
+    answer: 'Maximálně 6-7 bodů pro lepší čitelnost'
   }
 ];
 
@@ -315,13 +437,20 @@ export const initialStudents: Student[] = [
       eyes: 'brown'
     },
     xp: 150,
+    level: 1,
     badges: ['file-champion'],
     snakeScore: 15,
     spaceScore: 8,
     stars: 3,
     lastActive: new Date().toISOString(),
     dailyQuestsCompleted: ['quest1', 'quest2'],
-    totalQuestsCompleted: 2
+    totalQuestsCompleted: 2,
+    loginStreak: 3,
+    lastLoginDate: new Date().toISOString(),
+    topicsCompleted: ['file-organization'],
+    typingScore: 45,
+    helpCount: 1,
+    creativeProjects: 0
   },
   {
     id: '2',
@@ -333,13 +462,20 @@ export const initialStudents: Student[] = [
       eyes: 'blue'
     },
     xp: 280,
+    level: 1,
     badges: ['file-champion', 'keyboard-master'],
     snakeScore: 25,
     spaceScore: 12,
     stars: 4,
     lastActive: new Date().toISOString(),
     dailyQuestsCompleted: ['quest1', 'quest2', 'quest3'],
-    totalQuestsCompleted: 3
+    totalQuestsCompleted: 3,
+    loginStreak: 7,
+    lastLoginDate: new Date().toISOString(),
+    topicsCompleted: ['file-organization', 'keyboard-shortcuts'],
+    typingScore: 78,
+    helpCount: 2,
+    creativeProjects: 1
   },
   {
     id: '3',
@@ -351,13 +487,20 @@ export const initialStudents: Student[] = [
       eyes: 'brown'
     },
     xp: 95,
+    level: 1,
     badges: [],
     snakeScore: 8,
     spaceScore: 5,
     stars: 2,
     lastActive: new Date().toISOString(),
     dailyQuestsCompleted: ['quest1'],
-    totalQuestsCompleted: 1
+    totalQuestsCompleted: 1,
+    loginStreak: 1,
+    lastLoginDate: new Date().toISOString(),
+    topicsCompleted: [],
+    typingScore: 32,
+    helpCount: 0,
+    creativeProjects: 0
   },
   {
     id: '4',
@@ -369,13 +512,20 @@ export const initialStudents: Student[] = [
       eyes: 'green'
     },
     xp: 420,
+    level: 2,
     badges: ['file-champion', 'keyboard-master', 'hardware-expert'],
     snakeScore: 32,
     spaceScore: 18,
     stars: 5,
     lastActive: new Date().toISOString(),
     dailyQuestsCompleted: ['quest1', 'quest2', 'quest3', 'quest4'],
-    totalQuestsCompleted: 4
+    totalQuestsCompleted: 4,
+    loginStreak: 12,
+    lastLoginDate: new Date().toISOString(),
+    topicsCompleted: ['file-organization', 'keyboard-shortcuts', 'computer-parts'],
+    typingScore: 92,
+    helpCount: 4,
+    creativeProjects: 2
   },
   {
     id: '5',
@@ -387,13 +537,20 @@ export const initialStudents: Student[] = [
       eyes: 'blue'
     },
     xp: 200,
+    level: 1,
     badges: ['file-champion'],
     snakeScore: 18,
     spaceScore: 10,
     stars: 3,
     lastActive: new Date().toISOString(),
     dailyQuestsCompleted: ['quest1', 'quest2'],
-    totalQuestsCompleted: 2
+    totalQuestsCompleted: 2,
+    loginStreak: 5,
+    lastLoginDate: new Date().toISOString(),
+    topicsCompleted: ['file-organization'],
+    typingScore: 56,
+    helpCount: 1,
+    creativeProjects: 0
   }
 ];
 

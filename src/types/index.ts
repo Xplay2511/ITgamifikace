@@ -6,9 +6,14 @@ export interface Badge {
   code: string;
   unlocked: boolean;
   xpReward: number;
-  unlockMethod: 'code' | 'quiz' | 'game' | 'daily';
+  unlockMethod: 'code' | 'quiz' | 'game' | 'daily' | 'automatic';
   maxUses?: number;
   expiresAt?: string;
+  autoUnlockCondition?: {
+    type: 'xp_threshold' | 'login_streak' | 'badge_count' | 'quest_count' | 'game_score' | 'login_time' | 'quest_speed' | 'help_count' | 'creative_projects';
+    value: number;
+    description: string;
+  };
 }
 
 export interface Topic {
@@ -18,6 +23,13 @@ export interface Topic {
   icon: string;
   completed: boolean;
   xpReward: number;
+  externalLink?: string;
+  externalDescription?: string;
+  question?: string;
+  answer?: string;
+  difficulty: 'easy' | 'medium' | 'hard';
+  category: string;
+  estimatedTime: number;
 }
 
 export interface Student {
@@ -25,6 +37,7 @@ export interface Student {
   name: string;
   avatar: AvatarSettings;
   xp: number;
+  level: number;
   badges: string[];
   snakeScore: number;
   spaceScore: number;
@@ -32,6 +45,12 @@ export interface Student {
   lastActive: string;
   dailyQuestsCompleted: string[];
   totalQuestsCompleted: number;
+  loginStreak: number;
+  lastLoginDate: string;
+  topicsCompleted: string[];
+  typingScore: number;
+  helpCount: number;
+  creativeProjects: number;
 }
 
 export interface AvatarSettings {

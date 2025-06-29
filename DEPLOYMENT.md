@@ -1,177 +1,197 @@
-# 🚀 Návod na nasazení Gamifikace Informatika
+# 🚀 Instrukce pro nasazení vylepšené IT Gamifikace
 
-Tento návod vás provede nasazením aplikace na internet, aby byla dostupná odkudkoliv.
+## 📋 Přehled změn
 
-## 📋 Předpoklady
+### ✅ Opravené problémy
+1. **Denní výzva** - Nyní se aktualizuje každou půlnoc automaticky
+2. **Automatické odznaky** - Odznaky se odemykají na základě aktivit, ne jen kódů
+3. **Vylepšená témata** - Externí odkazy a interaktivní otázky místo jednoduchého kliknutí
 
-- GitHub účet (zdarma)
-- Node.js nainstalovaný lokálně (pro testování)
+### 🆕 Nové funkce
+- Automatické odemykání odznaků při splnění podmínek
+- Login streak systém (sledování po sobě jdoucích přihlášení)
+- Vylepšená témata s externími odkazy a otázkami
+- Různé obtížnosti témat (easy, medium, hard)
+- Časové odhady pro dokončení témat
 
-## 🎯 Možnosti nasazení
+## 🔧 Příprava k nasazení
 
-### 1. **Vercel (DOPORUČENO) - Nejjednodušší**
-
-#### Krok 1: Připravte projekt
+### 1. Kontrola změn
 ```bash
-# Otestujte build lokálně
+git status
+git diff
+```
+
+### 2. Testování lokálně
+```bash
+npm run dev
+```
+
+Ověřte:
+- ✅ Denní výzva se načítá správně
+- ✅ Automatické odznaky fungují
+- ✅ Vylepšená témata s modaly
+- ✅ Login streak se aktualizuje
+
+### 3. Build aplikace
+```bash
 npm run build
 ```
 
-#### Krok 2: Nahrajte na GitHub
-1. Vytvořte nový repository na GitHub.com
-2. Nahrajte kód:
+## 📤 Nasazení na GitHub
+
+### 1. Commit změn
 ```bash
-git init
 git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/VASE_USERNAME/gamifikace-informatika.git
-git push -u origin main
+git commit -m "Vylepšená verze: automatické odznaky, denní výzvy, vylepšená témata
+
+- Oprava denní výzvy - aktualizace každou půlnoc
+- Automatické odznaky na základě aktivit
+- Vylepšená témata s externími odkazy a otázkami
+- Login streak systém
+- Různé obtížnosti témat"
 ```
 
-#### Krok 3: Nasazení na Vercel
-1. Jděte na [vercel.com](https://vercel.com)
-2. Přihlaste se s GitHub účtem
-3. Klikněte "New Project"
-4. Vyberte váš repository
-5. Klikněte "Deploy"
-
-**Výhody Vercel:**
-- ✅ Bezplatný hosting
-- ✅ Automatické nasazení při push
-- ✅ HTTPS automaticky
-- ✅ Vynikající výkon
-- ✅ Custom doména možná
-
-### 2. **Netlify - Alternativa**
-
-#### Krok 1: Připravte projekt
+### 2. Push na GitHub
 ```bash
-npm run build
+git push origin main
 ```
 
-#### Krok 2: Nahrajte na GitHub
-(Stejné jako u Vercel)
+### 3. Ověření na GitHub
+- Zkontrolujte, že všechny soubory jsou nahrány
+- Ověřte, že commit obsahuje všechny změny
 
-#### Krok 3: Nasazení na Netlify
-1. Jděte na [netlify.com](https://netlify.com)
-2. Přihlaste se s GitHub účtem
-3. Klikněte "New site from Git"
-4. Vyberte váš repository
-5. Nastavte:
-   - Build command: `npm run build`
-   - Publish directory: `dist`
-6. Klikněte "Deploy site"
+## 🔥 Nasazení na Firebase
 
-### 3. **GitHub Pages - Základní**
-
-#### Krok 1: Upravte package.json
-```json
-{
-  "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
-  },
-  "devDependencies": {
-    "gh-pages": "^5.0.0"
-  }
-}
-```
-
-#### Krok 2: Nainstalujte gh-pages
+### 1. Přihlášení do Firebase
 ```bash
-npm install --save-dev gh-pages
+firebase login
 ```
 
-#### Krok 3: Nasazení
+### 2. Kontrola konfigurace
 ```bash
-npm run deploy
+firebase projects:list
+firebase use your-project-id
 ```
 
-#### Krok 4: Aktivujte GitHub Pages
-1. Jděte do repository settings
-2. Scrollujte dolů na "Pages"
-3. Vyberte "gh-pages" branch
-4. Uložte
+### 3. Nasazení
+```bash
+firebase deploy
+```
 
-## 🔧 Konfigurace pro produkci
+### 4. Ověření nasazení
+- Zkontrolujte URL aplikace
+- Otestujte všechny nové funkce
+- Ověřte, že data se ukládají správně
 
-### Environment Variables (volitelné)
-Pokud budete potřebovat environment variables:
+## 🧪 Testování po nasazení
 
-**Vercel:**
-1. Project Settings → Environment Variables
-2. Přidejte potřebné proměnné
+### 1. Testování denní výzvy
+1. Přihlaste se jako student
+2. Splňte denní výzvu
+3. Odhlaste se a přihlaste se znovu
+4. Ověřte, že se zobrazuje nová výzva (pokud je nový den)
 
-**Netlify:**
-1. Site Settings → Environment Variables
-2. Přidejte potřebné proměnné
+### 2. Testování automatických odznaků
+1. Přihlaste se jako nový student
+2. Získejte nějaké XP (hra, téma, denní výzva)
+3. Ověřte, že se automaticky odemkly odznaky:
+   - "První den" - při prvním přihlášení
+   - "Sběratel XP" - při dosažení 1000 XP
+   - "Hadí mistr" - při dosažení 20+ bodů ve Snake
 
-### Custom doména (volitelné)
-1. Kupte doménu (např. gamifikace-informatika.cz)
-2. V nastavení platformy přidejte custom doménu
-3. Nastavte DNS záznamy podle instrukcí
+### 3. Testování vylepšených témat
+1. Klikněte na téma s externím odkazem
+2. Otevřete studijní materiál
+3. Zkuste odpovědět na otázku
+4. Ověřte, že téma se splní pouze při správné odpovědi
 
-## 📱 Testování nasazení
+### 4. Testování login streak
+1. Přihlaste se několik dní v řadě
+2. Ověřte, že se odemkne odznak "Týdenní bojovník" po 7 dnech
 
-Po nasazení otestujte:
+## 🔍 Kontrola dat v Firebase Console
 
-1. **Přihlášení studenta** - vytvoření nového účtu
-2. **Přihlášení učitele** - heslo: `ucitel2024`
-3. **Funkce aplikace:**
-   - Sbírání odznaků
-   - Hry (Snake, Space Shooter)
-   - Denní výzvy
-   - Leaderboard
-   - Avatar builder
+### 1. Firestore Database
+Zkontrolujte kolekce:
+- `students` - nová pole pro sledování aktivit
+- `badges` - automatické odznaky s podmínkami
+- `topics` - vylepšená témata s externími odkazy
+- `dailyQuests` - denní výzvy s daty
 
-## 🔒 Bezpečnost
+### 2. Authentication
+- Ověřte, že se studenti mohou registrovat
+- Zkontrolujte, že učitel má přístup
 
-- **Heslo učitele** je hardcoded v kódu - pro produkci zvažte změnu
-- **Data** se ukládají v localStorage prohlížeči
-- **Žádné backend** - vše běží v prohlížeči
-
-## 📊 Monitoring
-
-### Vercel Analytics
-1. Vercel Dashboard → Analytics
-2. Sledujte návštěvnost, výkon
-
-### Netlify Analytics
-1. Netlify Dashboard → Analytics
-2. Sledujte návštěvnost
+### 3. Hosting
+- Ověřte, že aplikace běží na správné URL
+- Zkontrolujte, že všechny soubory jsou nahrány
 
 ## 🚨 Řešení problémů
 
-### Build selže
-```bash
-# Zkontrolujte lokální build
-npm run build
+### Problém: Denní výzva se neaktualizuje
+**Řešení:**
+1. Zkontrolujte, že `getTodaysQuest()` funkce se volá
+2. Ověřte, že datum se porovnává správně
+3. Zkontrolujte Firestore pravidla
 
-# Zkontrolujte logy v dashboardu platformy
-```
+### Problém: Automatické odznaky se neodemýkají
+**Řešení:**
+1. Zkontrolujte, že `checkAndUnlockAutomaticBadges()` se volá
+2. Ověřte podmínky v `autoUnlockCondition`
+3. Zkontrolujte, že student má správná data
 
-### Aplikace nefunguje
-1. Zkontrolujte console v prohlížeči (F12)
-2. Zkontrolujte network tab
-3. Zkontrolujte localStorage
+### Problém: Vylepšená témata nefungují
+**Řešení:**
+1. Ověřte, že `TopicGrid` komponenta je správně importována
+2. Zkontrolujte, že témata mají všechna nová pole
+3. Ověřte, že modaly se zobrazují správně
 
-### Pomalé načítání
-1. Zkontrolujte velikost bundle
-2. Optimalizujte obrázky
-3. Zkontrolujte CDN nastavení
+### Problém: Build selže
+**Řešení:**
+1. Zkontrolujte TypeScript chyby
+2. Ověřte, že všechny importy jsou správné
+3. Zkontrolujte, že všechny typy jsou definované
+
+## 📊 Monitoring po nasazení
+
+### 1. Firebase Analytics
+- Sledujte aktivitu uživatelů
+- Ověřte, že nové funkce se používají
+
+### 2. Firestore Usage
+- Sledujte čtení a zápisy
+- Ověřte, že data se ukládají efektivně
+
+### 3. Performance
+- Sledujte dobu načítání
+- Ověřte, že aplikace je rychlá
+
+## 🎯 Další kroky
+
+### Krátkodobé (1-2 týdny)
+- Sběr feedbacku od uživatelů
+- Oprava případných bugů
+- Optimalizace performance
+
+### Střednědobé (1-2 měsíce)
+- Implementace push notifikací
+- Přidání nových témat
+- Rozšíření automatických odznaků
+
+### Dlouhodobé (3+ měsíce)
+- AI tutor
+- Pokročilé analytiky
+- Sociální funkce
 
 ## 📞 Podpora
 
-- **Vercel:** [vercel.com/support](https://vercel.com/support)
-- **Netlify:** [netlify.com/support](https://netlify.com/support)
-- **GitHub:** [github.com/support](https://github.com/support)
+Pokud narazíte na problémy:
+1. Zkontrolujte Firebase Console
+2. Ověřte konzoli prohlížeče
+3. Zkontrolujte Network tab
+4. Ověřte Firestore pravidla
 
-## 🎉 Hotovo!
+---
 
-Po úspěšném nasazení bude vaše aplikace dostupná na:
-- **Vercel:** `https://vas-projekt.vercel.app`
-- **Netlify:** `https://vas-projekt.netlify.app`
-- **GitHub Pages:** `https://vase-username.github.io/gamifikace-informatika`
-
-Studenti se mohou přihlásit odkudkoliv a jejich pokrok se uloží v jejich prohlížeči! 
+**Úspěšné nasazení! 🎉** 

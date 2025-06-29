@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -58,24 +59,172 @@
   .neon-glow {
     box-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00, 0 0 30px #00FF00;
   }
-  
-  .snake-grid {
-    @apply bg-arcade-dark border-2 border-arcade-neon-green;
+}
+
+/* XP animace */
+.progress-fill.xp-gain {
+  animation: xpGain 0.6s ease-out;
+}
+
+.progress-fill.level-up {
+  animation: levelUp 1s ease-in-out;
+}
+
+@keyframes xpGain {
+  0% {
+    box-shadow: 0 0 5px #00FF00;
+  }
+  50% {
+    box-shadow: 0 0 20px #00FF00, 0 0 30px #00FF00;
+  }
+  100% {
+    box-shadow: 0 0 5px #00FF00;
+  }
+}
+
+@keyframes levelUp {
+  0% {
+    width: 0%;
+    box-shadow: 0 0 10px #00FF00;
+  }
+  50% {
+    box-shadow: 0 0 30px #00FF00, 0 0 50px #00FF00;
+  }
+  100% {
+    box-shadow: 0 0 10px #00FF00;
+  }
+}
+
+/* XP text animace */
+.xp-gain-text {
+  animation: xpGainText 0.8s ease-out;
+}
+
+@keyframes xpGainText {
+  0% {
+    transform: scale(1);
+    color: white;
+  }
+  50% {
+    transform: scale(1.2);
+    color: #00FF00;
+  }
+  100% {
+    transform: scale(1);
+    color: white;
+  }
+}
+
+/* Level animace */
+.level-up-text {
+  animation: levelUpText 1s ease-out;
+}
+
+@keyframes levelUpText {
+  0% {
+    transform: scale(1);
+    color: white;
+  }
+  25% {
+    transform: scale(1.3);
+    color: #00FF00;
+  }
+  50% {
+    transform: scale(1.1);
+    color: #00BFFF;
+  }
+  100% {
+    transform: scale(1);
+    color: white;
+  }
+}
+
+/* Konfety animace */
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.confetti {
+  animation: confetti-fall 3s linear forwards;
+}
+
+/* Pulse animace pro progress bar při XP získání */
+.progress-bar.xp-pulse {
+  animation: progressPulse 0.6s ease-out;
+}
+
+@keyframes progressPulse {
+  0% {
+    box-shadow: 0 0 5px #00FF00;
+  }
+  50% {
+    box-shadow: 0 0 15px #00FF00, 0 0 25px #00FF00;
+  }
+  100% {
+    box-shadow: 0 0 5px #00FF00;
+  }
+}
+
+/* Touch-friendly improvements */
+@media (max-width: 768px) {
+  .arcade-button {
+    min-height: 44px; /* Apple's recommended minimum touch target size */
+    min-width: 44px;
+    font-size: 16px; /* Prevents zoom on iOS */
   }
   
-  .snake-cell {
-    @apply w-4 h-4;
+  input, textarea, select {
+    font-size: 16px; /* Prevents zoom on iOS */
   }
   
-  .snake-food {
-    @apply bg-arcade-neon-pink;
+  .arcade-card {
+    margin: 0.5rem 0;
   }
   
-  .snake-body {
-    @apply bg-arcade-neon-green;
+  /* Better spacing for mobile */
+  .space-y-4 > * + * {
+    margin-top: 1rem;
   }
   
-  .snake-head {
-    @apply bg-arcade-yellow;
+  /* Larger touch targets for mobile */
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Offline indicator animation */
+@keyframes offline-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.offline-indicator {
+  animation: offline-pulse 2s ease-in-out infinite;
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 640px) {
+  .font-arcade {
+    font-size: 0.875rem; /* Smaller font for mobile */
+  }
+  
+  h1.font-arcade {
+    font-size: 1.25rem;
+  }
+  
+  h2.font-arcade {
+    font-size: 1.125rem;
   }
 } 

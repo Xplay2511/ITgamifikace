@@ -8,6 +8,8 @@ import TeacherDashboard from './components/TeacherDashboard';
 import AvatarBuilder from './components/AvatarBuilder';
 import { AppState, Student, AvatarSettings } from './types';
 import { initialBadges, initialTopics, initialDailyQuests, initialTeacherSettings } from './data/initialData';
+import { calculateLevel } from './utils/initializeFirestore';
+import { soundEffects } from './utils/soundEffects';
 
 const App: React.FC = () => {
   const [appState, setAppState] = useState<AppState>({
@@ -60,6 +62,7 @@ const App: React.FC = () => {
         } else {
           // Načtení dat pro studenta
           await loadStudentData(user.uid);
+          await loadTodaysQuest(); // Načti dnešní denní výzvu
         }
       } else {
         // Uživatel není přihlášen
@@ -74,6 +77,32 @@ const App: React.FC = () => {
     });
 
     return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    // Načti základní data při startu aplikace
+    const loadInitialData = async () => {
+      try {
+        const badges = await firestoreService.getBadges();
+        const topics = await firestoreService.getTopics();
+        const dailyQuests = await firestoreService.getDailyQuests();
+        const snakeLeaderboard = await firestoreService.getLeaderboard('snake');
+        const spaceLeaderboard = await firestoreService.getLeaderboard('space');
+
+        setAppState(prev => ({
+          ...prev,
+          badges: badges.length > 0 ? badges : initialBadges,
+          topics: topics.length > 0 ? topics : initialTopics,
+          dailyQuests: dailyQuests.length > 0 ? dailyQuests : initialDailyQuests,
+          snakeLeaderboard,
+          spaceLeaderboard
+        }));
+      } catch (error) {
+        console.error('Error loading initial data:', error);
+      }
+    };
+
+    loadInitialData();
   }, []);
 
   const loadTeacherData = async () => {
@@ -105,24 +134,43 @@ const App: React.FC = () => {
       if (student) {
         setCurrentStudent(student);
         
-        // Načtení ostatních dat
-        const badges = await firestoreService.getBadges();
-        const topics = await firestoreService.getTopics();
-        const dailyQuests = await firestoreService.getDailyQuests();
-        const snakeLeaderboard = await firestoreService.getLeaderboard('snake');
-        const spaceLeaderboard = await firestoreService.getLeaderboard('space');
-
-        setAppState(prev => ({
-          ...prev,
-          badges: badges.length > 0 ? badges : initialBadges,
-          topics: topics.length > 0 ? topics : initialTopics,
-          dailyQuests: dailyQuests.length > 0 ? dailyQuests : initialDailyQuests,
-          snakeLeaderboard,
-          spaceLeaderboard
-        }));
+        // Aktualizuj login streak při přihlášení
+        await firestoreService.updateLoginStreak(userId);
+        
+        // Kontrola automatických odznaků při přihlášení
+        const unlockedBadges = await firestoreService.checkAndUnlockAutomaticBadges(userId);
+        if (unlockedBadges.length > 0) {
+          const updatedBadges = appState.badges.map(badge => 
+            unlockedBadges.includes(badge.id) ? { ...badge, unlocked: true } : badge
+          );
+          setAppState(prev => ({ ...prev, badges: updatedBadges }));
+          
+          unlockedBadges.forEach(badgeId => {
+            const badge = appState.badges.find(b => b.id === badgeId);
+            if (badge) {
+              alert(`🎉 Nový odznak odemčen: ${badge.name}! +${badge.xpReward} XP`);
+            }
+          });
+        }
       }
     } catch (error) {
       console.error('Error loading student data:', error);
+    }
+  };
+
+  const loadTodaysQuest = async () => {
+    try {
+      const todaysQuest = await firestoreService.getTodaysQuest();
+      if (todaysQuest) {
+        // Aktualizuj denní výzvy s dnešní výzvou
+        const existingQuests = appState.dailyQuests.filter(q => q.id !== todaysQuest.id);
+        setAppState(prev => ({ 
+          ...prev, 
+          dailyQuests: [...existingQuests, todaysQuest] 
+        }));
+      }
+    } catch (error) {
+      console.error('Error loading today\'s quest:', error);
     }
   };
 
@@ -150,107 +198,32 @@ const App: React.FC = () => {
     const badge = appState.badges.find(b => b.id === badgeId);
     if (!badge) return;
 
+    const newXp = currentStudent.xp + badge.xpReward;
+    const newLevel = calculateLevel(newXp);
+    const oldLevel = currentStudent.level || 1;
+
     const updatedStudent = {
       ...currentStudent,
       badges: currentStudent.badges.includes(badgeId) 
         ? currentStudent.badges 
         : [...currentStudent.badges, badgeId],
-      xp: currentStudent.xp + badge.xpReward
+      xp: newXp,
+      level: newLevel
     };
 
     setCurrentStudent(updatedStudent);
     await firestoreService.updateStudentData(appState.currentUser, {
       badges: updatedStudent.badges,
-      xp: updatedStudent.xp
+      xp: updatedStudent.xp,
+      level: updatedStudent.level
     });
-  };
 
-  const handleCompleteTopic = async (topicId: string) => {
-    if (!appState.currentUser || appState.isTeacher || !currentStudent) return;
+    // Zvukový efekt pro odznak
+    soundEffects.playBadgeUnlock();
 
-    const topic = appState.topics.find(t => t.id === topicId);
-    if (!topic || topic.completed) return;
-
-    const updatedTopics = appState.topics.map(t => 
-      t.id === topicId ? { ...t, completed: true } : t
-    );
-
-    const updatedStudent = {
-      ...currentStudent,
-      xp: currentStudent.xp + topic.xpReward
-    };
-
-    setAppState(prev => ({ ...prev, topics: updatedTopics }));
-    setCurrentStudent(updatedStudent);
-    
-    await firestoreService.updateStudentData(appState.currentUser, {
-      xp: updatedStudent.xp
-    });
-  };
-
-  const handleSnakeScoreUpdate = async (score: number) => {
-    if (!appState.currentUser || appState.isTeacher || !currentStudent) return;
-
-    if (score > currentStudent.snakeScore) {
-      const updatedStudent = { ...currentStudent, snakeScore: score };
-      setCurrentStudent(updatedStudent);
-      
-      await firestoreService.updateStudentData(appState.currentUser, {
-        snakeScore: score
-      });
-
-      // Update leaderboard
-      const newLeaderboardEntry = {
-        name: currentStudent.name,
-        score,
-        date: new Date().toISOString().split('T')[0]
-      };
-
-      const updatedLeaderboard = [
-        ...appState.snakeLeaderboard,
-        newLeaderboardEntry
-      ].sort((a, b) => b.score - a.score).slice(0, 10);
-
-      setAppState(prev => ({ ...prev, snakeLeaderboard: updatedLeaderboard }));
-      await firestoreService.updateLeaderboard('snake', newLeaderboardEntry);
-    }
-
-    // Check for badge unlock
-    if (score >= 20) {
-      handleUnlockBadge('snake-master');
-    }
-  };
-
-  const handleSpaceScoreUpdate = async (score: number) => {
-    if (!appState.currentUser || appState.isTeacher || !currentStudent) return;
-
-    if (score > currentStudent.spaceScore) {
-      const updatedStudent = { ...currentStudent, spaceScore: score };
-      setCurrentStudent(updatedStudent);
-      
-      await firestoreService.updateStudentData(appState.currentUser, {
-        spaceScore: score
-      });
-
-      // Update leaderboard
-      const newLeaderboardEntry = {
-        name: currentStudent.name,
-        score,
-        date: new Date().toISOString().split('T')[0]
-      };
-
-      const updatedLeaderboard = [
-        ...appState.spaceLeaderboard,
-        newLeaderboardEntry
-      ].sort((a, b) => b.score - a.score).slice(0, 10);
-
-      setAppState(prev => ({ ...prev, spaceLeaderboard: updatedLeaderboard }));
-      await firestoreService.updateLeaderboard('space', newLeaderboardEntry);
-    }
-
-    // Check for badge unlock
-    if (score >= 100) {
-      handleUnlockBadge('space-defender');
+    // Pokud se zvýšil level, zobraz notifikaci
+    if (newLevel > oldLevel) {
+      alert(`🎊 Gratulujeme! Dosáhl jsi levelu ${newLevel}!`);
     }
   };
 
@@ -261,9 +234,14 @@ const App: React.FC = () => {
     if (!quest) return;
 
     const newTotalQuests = currentStudent.totalQuestsCompleted + 1;
+    const newXp = currentStudent.xp + (correct ? quest.xpReward : 0);
+    const newLevel = calculateLevel(newXp);
+    const oldLevel = currentStudent.level || 1;
+
     const updatedStudent = {
       ...currentStudent,
-      xp: currentStudent.xp + (correct ? quest.xpReward : 0),
+      xp: newXp,
+      level: newLevel,
       dailyQuestsCompleted: currentStudent.dailyQuestsCompleted.includes(questId)
         ? currentStudent.dailyQuestsCompleted
         : [...currentStudent.dailyQuestsCompleted, questId],
@@ -273,13 +251,225 @@ const App: React.FC = () => {
     setCurrentStudent(updatedStudent);
     await firestoreService.updateStudentData(appState.currentUser, {
       xp: updatedStudent.xp,
+      level: updatedStudent.level,
       dailyQuestsCompleted: updatedStudent.dailyQuestsCompleted,
       totalQuestsCompleted: newTotalQuests
     });
 
+    // Pokud se zvýšil level, zobraz notifikaci
+    if (newLevel > oldLevel) {
+      alert(`🎊 Gratulujeme! Dosáhl jsi levelu ${newLevel}!`);
+    }
+
+    // Kontrola automatických odznaků
+    const unlockedBadges = await firestoreService.checkAndUnlockAutomaticBadges(appState.currentUser);
+    if (unlockedBadges.length > 0) {
+      // Aktualizuj lokální stav
+      const updatedBadges = appState.badges.map(badge => 
+        unlockedBadges.includes(badge.id) ? { ...badge, unlocked: true } : badge
+      );
+      setAppState(prev => ({ ...prev, badges: updatedBadges }));
+      
+      // Zvukový efekt pro automatické odznaky
+      soundEffects.playBadgeUnlock();
+      
+      // Zobraz notifikaci
+      unlockedBadges.forEach(badgeId => {
+        const badge = appState.badges.find(b => b.id === badgeId);
+        if (badge) {
+          alert(`🎉 Nový odznak odemčen: ${badge.name}! +${badge.xpReward} XP`);
+        }
+      });
+    }
+
     // Check for quiz champion badge
     if (newTotalQuests >= 10) {
       handleUnlockBadge('quiz-champion');
+    }
+  };
+
+  const handleCompleteTopic = async (topicId: string) => {
+    console.log('handleCompleteTopic voláno s topicId:', topicId);
+    
+    if (!appState.currentUser || appState.isTeacher || !currentStudent) {
+      console.log('Chyba: chybí currentUser, isTeacher nebo currentStudent');
+      return;
+    }
+
+    const topic = appState.topics.find(t => t.id === topicId);
+    if (!topic) {
+      console.log('Chyba: téma nenalezeno');
+      return;
+    }
+
+    console.log('Téma nalezeno:', topic.name);
+    console.log('Aktuální XP studenta:', currentStudent.xp);
+    console.log('Aktuální dokončená témata:', currentStudent.topicsCompleted);
+
+    // Zajistím, že topicsCompleted existuje
+    const currentTopicsCompleted = currentStudent.topicsCompleted || [];
+
+    const newXp = currentStudent.xp + topic.xpReward;
+    const newLevel = calculateLevel(newXp);
+    const oldLevel = currentStudent.level || 1;
+
+    const updatedStudent = {
+      ...currentStudent,
+      xp: newXp,
+      level: newLevel,
+      topicsCompleted: currentTopicsCompleted.includes(topicId)
+        ? currentTopicsCompleted
+        : [...currentTopicsCompleted, topicId]
+    };
+
+    console.log('Nové XP:', updatedStudent.xp);
+    console.log('Nový level:', updatedStudent.level);
+    console.log('Nová dokončená témata:', updatedStudent.topicsCompleted);
+
+    setCurrentStudent(updatedStudent);
+    await firestoreService.updateStudentData(appState.currentUser, {
+      xp: updatedStudent.xp,
+      level: updatedStudent.level,
+      topicsCompleted: updatedStudent.topicsCompleted
+    });
+
+    // Po splnění tématu načti aktuálního studenta z databáze (pro jistotu propsání XP i splněných témat)
+    const freshStudent = await firestoreService.getStudentData(appState.currentUser);
+    if (freshStudent) {
+      console.log('Načtený fresh student:', freshStudent);
+      setCurrentStudent(freshStudent);
+    }
+
+    // Aktualizuj lokální stav témat
+    const updatedTopics = appState.topics.map(t => 
+      t.id === topicId ? { ...t, completed: true } : t
+    );
+    setAppState(prev => ({ ...prev, topics: updatedTopics }));
+
+    // Zobraz notifikaci o splnění tématu
+    let notification = `🎉 Téma "${topic.name}" splněno! +${topic.xpReward} XP`;
+    
+    // Pokud se zvýšil level, přidej notifikaci
+    if (newLevel > oldLevel) {
+      notification += `\n🎊 Gratulujeme! Dosáhl jsi levelu ${newLevel}!`;
+    }
+    
+    alert(notification);
+
+    // Kontrola automatických odznaků
+    const unlockedBadges = await firestoreService.checkAndUnlockAutomaticBadges(appState.currentUser);
+    if (unlockedBadges.length > 0) {
+      const updatedBadges = appState.badges.map(badge => 
+        unlockedBadges.includes(badge.id) ? { ...badge, unlocked: true } : badge
+      );
+      setAppState(prev => ({ ...prev, badges: updatedBadges }));
+      
+      // Zvukový efekt pro automatické odznaky
+      soundEffects.playBadgeUnlock();
+      
+      // Zobraz notifikaci
+      unlockedBadges.forEach(badgeId => {
+        const badge = appState.badges.find(b => b.id === badgeId);
+        if (badge) {
+          alert(`🎉 Nový odznak odemčen: ${badge.name}! +${badge.xpReward} XP`);
+        }
+      });
+    }
+  };
+
+  const handleSnakeScoreUpdate = async (score: number) => {
+    if (!appState.currentUser || appState.isTeacher || !currentStudent) return;
+
+    const xpGain = Math.floor(score / 5); // XP za každých 5 bodů
+    const newXp = currentStudent.xp + xpGain;
+    const newLevel = calculateLevel(newXp);
+    const oldLevel = currentStudent.level || 1;
+
+    const updatedStudent = {
+      ...currentStudent,
+      snakeScore: Math.max(currentStudent.snakeScore, score),
+      xp: newXp,
+      level: newLevel
+    };
+
+    setCurrentStudent(updatedStudent);
+    await firestoreService.updateStudentData(appState.currentUser, {
+      snakeScore: updatedStudent.snakeScore,
+      xp: updatedStudent.xp,
+      level: updatedStudent.level
+    });
+
+    // Pokud se zvýšil level, zobraz notifikaci
+    if (newLevel > oldLevel) {
+      alert(`🎊 Gratulujeme! Dosáhl jsi levelu ${newLevel}!`);
+    }
+
+    // Kontrola automatických odznaků
+    const unlockedBadges = await firestoreService.checkAndUnlockAutomaticBadges(appState.currentUser);
+    if (unlockedBadges.length > 0) {
+      const updatedBadges = appState.badges.map(badge => 
+        unlockedBadges.includes(badge.id) ? { ...badge, unlocked: true } : badge
+      );
+      setAppState(prev => ({ ...prev, badges: updatedBadges }));
+      
+      // Zvukový efekt pro automatické odznaky
+      soundEffects.playBadgeUnlock();
+      
+      // Zobraz notifikaci
+      unlockedBadges.forEach(badgeId => {
+        const badge = appState.badges.find(b => b.id === badgeId);
+        if (badge) {
+          alert(`🎉 Nový odznak odemčen: ${badge.name}! +${badge.xpReward} XP`);
+        }
+      });
+    }
+  };
+
+  const handleSpaceScoreUpdate = async (score: number) => {
+    if (!appState.currentUser || appState.isTeacher || !currentStudent) return;
+
+    const xpGain = Math.floor(score / 3); // XP za každé 3 asteroidy
+    const newXp = currentStudent.xp + xpGain;
+    const newLevel = calculateLevel(newXp);
+    const oldLevel = currentStudent.level || 1;
+
+    const updatedStudent = {
+      ...currentStudent,
+      spaceScore: Math.max(currentStudent.spaceScore, score),
+      xp: newXp,
+      level: newLevel
+    };
+
+    setCurrentStudent(updatedStudent);
+    await firestoreService.updateStudentData(appState.currentUser, {
+      spaceScore: updatedStudent.spaceScore,
+      xp: updatedStudent.xp,
+      level: updatedStudent.level
+    });
+
+    // Pokud se zvýšil level, zobraz notifikaci
+    if (newLevel > oldLevel) {
+      alert(`🎊 Gratulujeme! Dosáhl jsi levelu ${newLevel}!`);
+    }
+
+    // Kontrola automatických odznaků
+    const unlockedBadges = await firestoreService.checkAndUnlockAutomaticBadges(appState.currentUser);
+    if (unlockedBadges.length > 0) {
+      const updatedBadges = appState.badges.map(badge => 
+        unlockedBadges.includes(badge.id) ? { ...badge, unlocked: true } : badge
+      );
+      setAppState(prev => ({ ...prev, badges: updatedBadges }));
+      
+      // Zvukový efekt pro automatické odznaky
+      soundEffects.playBadgeUnlock();
+      
+      // Zobraz notifikaci
+      unlockedBadges.forEach(badgeId => {
+        const badge = appState.badges.find(b => b.id === badgeId);
+        if (badge) {
+          alert(`🎉 Nový odznak odemčen: ${badge.name}! +${badge.xpReward} XP`);
+        }
+      });
     }
   };
 
